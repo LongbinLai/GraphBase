@@ -21,23 +21,23 @@ public class Vertex {
     return neighbors.values();
   }
 
-  public void add_neighbor(Vertex v) {
+  public void addNeighbor(Vertex v) {
     if (this.getId() != v.getId()) {
       this.neighbors.put(v.getId(), v);
     }
   }
 
-  public void remove_neighbor(Vertex v) {
-    this.remove_neighbor(v.getId());
+  public void removeNeighbor(Vertex v) {
+    this.removeNeighbor(v.getId());
   }
 
-  public void remove_neighbor(int id) {
+  public void removeNeighbor(int id) {
     this.neighbors.remove(id);
   }
 
-  public void remove_neighbors() {
+  public void removeNeighbors() {
     for (int id : this.neighbors.keySet()) {
-      this.remove_neighbor(id);
+      this.removeNeighbor(id);
     }
   }
 

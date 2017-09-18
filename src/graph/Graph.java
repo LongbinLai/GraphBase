@@ -24,11 +24,11 @@ public class Graph {
     this.name = name;
   }
 
-  public Vertex get_node(int id) {
+  public Vertex getNode(int id) {
     return this.vertices.get(id);
   }
 
-  public Set<Integer> node_ids() {
+  public Set<Integer> nodesID() {
     return vertices.keySet();
   }
 
@@ -36,69 +36,69 @@ public class Graph {
     return vertices.values();
   }
 
-  public Vertex add_node(Vertex v) {
+  public Vertex addNode(Vertex v) {
     this.vertices.put(v.getId(), v);
     return v;
   }
 
-  public Vertex add_node(int id) {
+  public Vertex addNode(int id) {
     Vertex node = new Vertex(id);
-    return this.add_node(node);
+    return this.addNode(node);
   }
 
-  public Vertex add_node() {
-    if (this.is_empty()) {
-      return this.add_node(0);
+  public Vertex addNode() {
+    if (this.isEmpty()) {
+      return this.addNode(0);
     }
     int max_id = Collections.max(this.vertices.keySet());
-    return this.add_node(max_id + 1);
+    return this.addNode(max_id + 1);
   }
 
-  public void remove_node(int id) {
+  public void removeNode(int id) {
     for (Vertex v : this.nodes()) {
-      v.remove_neighbor(id);
+      v.removeNeighbor(id);
     }
     this.vertices.remove(id);
   }
 
-  public void remove_node(Vertex v) {
-    this.remove_node(v.getId());
+  public void removeNode(Vertex v) {
+    this.removeNode(v.getId());
   }
 
-  public void add_edge(Vertex node_u, Vertex node_v) {
-    node_u.add_neighbor(node_v);
-    node_v.add_neighbor(node_u);
+  public void addEdge(Vertex node_u, Vertex node_v) {
+    node_u.addNeighbor(node_v);
+    node_v.addNeighbor(node_u);
   }
 
-  public void add_edge(int u, int v) {
+  public void addEdge(int u, int v) {
     Vertex node_u = this.vertices.get(u);
     Vertex node_v = this.vertices.get(v);
     if (node_u == null) {
-      node_u = this.add_node(u);
+      node_u = this.addNode(u);
     }
     if (node_v == null) {
-      node_v = this.add_node(v);
+      node_v = this.addNode(v);
     }
-    this.add_edge(node_u, node_v);
+    this.addEdge(node_u, node_v);
   }
 
-  public void add_edge(Edge e) {
-    this.add_edge(e.getStart(), e.getEnd());
+  public void addEdge(Edge e) {
+    this.addEdge(e.getStart(), e.getEnd());
   }
 
-  public void remove_edge(int u, int v) {
-    Vertex node_u = this.vertices.get(u);
-    Vertex node_v = this.vertices.get(v);
-    node_u.remove_neighbor(v);
-    node_v.remove_neighbor(u);
+  public void removeEdge(int u, int v) {
+    Vertex node_u = this.getNode(u);
+    Vertex node_v = this.getNode(v);
+    node_u.removeNeighbor(v);
+    node_v.removeNeighbor(u);
   }
 
-  public void remove_edge(Vertex node_u, Vertex node_v) {
-    this.remove_edge(node_u.getId(), node_v.getId());
+  public void removeEdge(Vertex node_u, Vertex node_v) {
+    this.removeEdge(node_u.getId(), node_v.getId());
   }
 
-  public void remove_edge(Edge e) {
-    this.remove_edge(e.getStart().getId(), e.getEnd().getId());
+  public void removeEdge(Edge e) {
+    this.removeEdge(e.getStart().getId(), e.getEnd().getId());
   }
 
   public List<Edge> edges() {
@@ -125,13 +125,13 @@ public class Graph {
     return this.vertices.size();
   }
 
-  public boolean is_empty() {
+  public boolean isEmpty() {
     return this.size() == 0;
   }
 
   public void empty() {
     for (Vertex n : this.vertices.values()) {
-      n.remove_neighbors();
+      n.removeNeighbors();
     }
     this.vertices.clear();
   }
@@ -143,7 +143,7 @@ public class Graph {
     result.append(this.getName());
     result.append("\n");
 
-    if (is_empty()) {
+    if (isEmpty()) {
       result.append("  Empty graph");
     } else {
       for (Vertex v : this.nodes()) {
