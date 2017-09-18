@@ -56,7 +56,7 @@ public class Graph {
 
   public void remove_node(int id) {
     for (Vertex v : this.nodes()) {
-      v.remove_neighbor_by_id(id);
+      v.remove_neighbor(id);
     }
     this.vertices.remove(id);
   }
@@ -89,8 +89,8 @@ public class Graph {
   public void remove_edge(int u, int v) {
     Vertex node_u = this.vertices.get(u);
     Vertex node_v = this.vertices.get(v);
-    node_u.remove_neighbor_by_id(v);
-    node_v.remove_neighbor_by_id(u);
+    node_u.remove_neighbor(v);
+    node_v.remove_neighbor(u);
   }
 
   public void remove_edge(Vertex node_u, Vertex node_v) {

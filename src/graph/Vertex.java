@@ -28,16 +28,16 @@ public class Vertex {
   }
 
   public void remove_neighbor(Vertex v) {
-    this.remove_neighbor_by_id(v.getId());
+    this.remove_neighbor(v.getId());
   }
 
-  public void remove_neighbor_by_id(int id) {
+  public void remove_neighbor(int id) {
     this.neighbors.remove(id);
   }
 
   public void remove_neighbors() {
     for (int id : this.neighbors.keySet()) {
-      this.remove_neighbor_by_id(id);
+      this.remove_neighbor(id);
     }
   }
 
