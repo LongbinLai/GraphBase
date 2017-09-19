@@ -1,8 +1,8 @@
 package algorithm;
 
-import graph.Graph;
-import graph.Vertex;
 import java.util.*;
+
+import graph.*;
 
 public class Traversal {
 

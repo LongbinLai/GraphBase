@@ -45,6 +45,7 @@ public class Vertex {
     return neighbors.size();
   }
 
+
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();

@@ -32,7 +32,7 @@ public class Graph {
     return vertices.keySet();
   }
 
-  public Collection<Vertex> nodes() {
+  public Collection<Vertex> getNodes() {
     return vertices.values();
   }
 
@@ -55,7 +55,7 @@ public class Graph {
   }
 
   public void removeNode(int id) {
-    for (Vertex v : this.nodes()) {
+    for (Vertex v : this.getNodes()) {
       v.removeNeighbor(id);
     }
     this.vertices.remove(id);
@@ -83,7 +83,7 @@ public class Graph {
   }
 
   public void addEdge(Edge e) {
-    this.addEdge(e.getStart(), e.getEnd());
+    this.addEdge(e.getStart().getId(), e.getEnd().getId());
   }
 
   public void removeEdge(int u, int v) {
@@ -101,9 +101,9 @@ public class Graph {
     this.removeEdge(e.getStart().getId(), e.getEnd().getId());
   }
 
-  public List<Edge> edges() {
+  public List<Edge> getEdges() {
     List<Edge> result = new ArrayList<>();
-    for (Vertex v : this.nodes()) {
+    for (Vertex v : this.getNodes()) {
       for (Vertex u : v.getNeighbors()) {
         if (v.getId() < u.getId()) {
           result.add(new Edge(v, u));
@@ -113,16 +113,28 @@ public class Graph {
     return result;
   }
 
-  public Map<Integer, Integer> degrees() {
+  public Map<Integer, Integer> getDegrees() {
     Map<Integer, Integer> result = new HashMap<>();
-    for (Vertex n : this.vertices.values()) {
+    for (Vertex n : this.getNodes()) {
       result.put(n.getId(), n.degree());
     }
     return result;
   }
 
+  public int getDegree(int id) {
+    return this.getNode(id).degree();
+  }
+
+  public int getDegree(Vertex v) {
+    return this.getDegree(v.getId());
+  }
+
   public int size() {
     return this.vertices.size();
+  }
+
+  public int getNumOfEdges(){
+    return this.getEdges().size();
   }
 
   public boolean isEmpty() {
@@ -130,10 +142,22 @@ public class Graph {
   }
 
   public void empty() {
-    for (Vertex n : this.vertices.values()) {
+    for (Vertex n : this.getNodes()) {
       n.removeNeighbors();
     }
     this.vertices.clear();
+  }
+
+  public boolean isDirected() {
+    return false;
+  }
+
+  public Graph copy() {
+    Graph g = new Graph();
+    for (Edge e : this.getEdges()) {
+      g.addEdge(e);
+    }
+    return g;
   }
 
   @Override
@@ -146,7 +170,7 @@ public class Graph {
     if (isEmpty()) {
       result.append("  Empty graph");
     } else {
-      for (Vertex v : this.nodes()) {
+      for (Vertex v : this.getNodes()) {
         result.append(v.toString());
       }
     }
