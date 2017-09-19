@@ -5,25 +5,34 @@ import java.util.*;
 public class Vertex {
 
   private int id;
-  private Map<Integer, Vertex> neighbors;
+  private Map<Integer, Edge> edges;
 
 
   public Vertex(int id) {
     this.id = id;
-    this.neighbors = new HashMap<>();
+    this.edges = new HashMap<>();
   }
 
   public int getId() {
     return id;
   }
 
-  public Collection<Vertex> getNeighbors() {
-    return neighbors.values();
+  public Collection<Edge> getEdges(){
+    return this.edges.values();
+  }
+
+  public List<Vertex> getNeighbors() {
+    List<Vertex> neighbors = new LinkedList<>();
+    for (Edge e : this.getEdges()){
+      neighbors.add(e.getEnd());
+    }
+    return neighbors;
   }
 
   public void addNeighbor(Vertex v) {
     if (this.getId() != v.getId()) {
-      this.neighbors.put(v.getId(), v);
+      Edge e = new Edge(this,v);
+      this.edges.put(v.getId(), e);
     }
   }
 
@@ -32,17 +41,17 @@ public class Vertex {
   }
 
   public void removeNeighbor(int id) {
-    this.neighbors.remove(id);
+    this.edges.remove(id);
   }
 
   public void removeNeighbors() {
-    for (int id : this.neighbors.keySet()) {
+    for (int id : this.edges.keySet()) {
       this.removeNeighbor(id);
     }
   }
 
   public int degree() {
-    return neighbors.size();
+    return edges.size();
   }
 
 
