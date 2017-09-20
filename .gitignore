@@ -1,0 +1,5 @@
+production/*
+/GraphStrcture/.idea
+/GraphStrcture/lib
+/GraphStrcture/out
+/GraphStrcture/GraphStrcture.iml
