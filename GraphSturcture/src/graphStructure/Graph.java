@@ -81,12 +81,13 @@ public class Graph {
     }
 
     /** *The foreach loop traverse all the edges connected with the deleted vertex,and delete the deleted vertex's Id from all of its
-    adjacent vertices,and delete all edges connectting the deleted vertices and its adjacent vetices(These edges will be removed not only
+     adjacent vertices,and delete all edges connectting the deleted vertices and its adjacent vetices(These edges will be removed not only
      from the HashMap "edges" ,but also be removed from the deleted vertex's adjacent vertices's HashMap"adjEdges")* **/
     for (Object key : vertices.get(deVertexId).getAdgEdges().keySet()) {
       Integer adjVerId =
           edges.get(key).getFrom().getId().intValue() == deVertexId ? edges.get(key).getTo().getId()
-              : edges.get(key).getFrom().getId();//to determine wether the adjVertex is the FromVertex of The edge or the ToVertex of the edge.
+              : edges.get(key).getFrom()
+                  .getId();//to determine wether the adjVertex is the FromVertex of The edge or the ToVertex of the edge.
       vertices.get(adjVerId).deleteAdjVertex(deVertexId);//
       vertices.get(adjVerId).deleteAdjEdge(Integer.parseInt(key.toString()));
       edges.remove(key);
@@ -142,7 +143,7 @@ public class Graph {
       throw new NullPointerException("The ToVertex is not existed");
     }
     for (Integer key : edges.keySet()) {
-      if(key==5) {
+      if (key == 5) {
         Integer i = 1;
       }
       if (edges.get(key).getFrom().getId().intValue() == fromVertexId
@@ -150,9 +151,9 @@ public class Graph {
         deleteEdge(key);
         unusedEdgeId.add(key);
         return;
-        }
-      if(edges.get(key).getFrom().getId().intValue() == toVertexId &&
-          edges.get(key).getTo().getId().intValue()== fromVertexId) {
+      }
+      if (edges.get(key).getFrom().getId().intValue() == toVertexId &&
+          edges.get(key).getTo().getId().intValue() == fromVertexId) {
         deleteEdge(key);
         unusedEdgeId.add(key);
         return;

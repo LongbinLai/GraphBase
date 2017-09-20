@@ -16,3 +16,11 @@
 *.zip
 *.tar.gz
 *.rar
+
+# XML Files #
+*.xml
+
+#Dir
+/out
+/lib
+
