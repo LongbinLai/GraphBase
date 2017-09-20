@@ -1,5 +1,18 @@
-production/*
-/GraphStrcture/.idea
-/GraphStrcture/lib
-/GraphStrcture/out
-/GraphStrcture/GraphStrcture.iml
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
