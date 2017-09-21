@@ -16,19 +16,19 @@ public class Graph {
     this.name = name;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public Vertex getNode(int id) {
     return this.vertices.get(id);
   }
 
-  public Set<Integer> nodesID() {
+  public Set<Integer> getNodesID() {
     return vertices.keySet();
   }
 
@@ -65,12 +65,12 @@ public class Graph {
     this.removeNode(v.getId());
   }
 
-  public void addEdge(Vertex node_u, Vertex node_v) {
-    node_u.addNeighbor(node_v);
+  public Edge addEdge(Vertex node_u, Vertex node_v) {
     node_v.addNeighbor(node_u);
+    return node_u.addNeighbor(node_v);
   }
 
-  public void addEdge(int u, int v) {
+  public Edge addEdge(int u, int v) {
     Vertex node_u = this.vertices.get(u);
     Vertex node_v = this.vertices.get(v);
     if (node_u == null) {
@@ -79,11 +79,7 @@ public class Graph {
     if (node_v == null) {
       node_v = this.addNode(v);
     }
-    this.addEdge(node_u, node_v);
-  }
-
-  public void addEdge(Edge e) {
-    this.addEdge(e.getStart().getId(), e.getEnd().getId());
+    return this.addEdge(node_u, node_v);
   }
 
   public void removeEdge(int u, int v) {
@@ -98,15 +94,15 @@ public class Graph {
   }
 
   public void removeEdge(Edge e) {
-    this.removeEdge(e.getStart().getId(), e.getEnd().getId());
+    this.removeEdge(e.getStart(), e.getEnd());
   }
 
   public List<Edge> getEdges() {
     List<Edge> result = new ArrayList<>();
     for (Vertex v : this.getNodes()) {
-      for (Vertex u : v.getNeighbors()) {
-        if (v.getId() < u.getId()) {
-          result.add(new Edge(v, u));
+      for (Edge e : v.getEdges()) {
+        if (e.getStart().getId() < e.getEnd().getId()) {
+          result.add(e);
         }
       }
     }
@@ -116,13 +112,13 @@ public class Graph {
   public Map<Integer, Integer> getDegrees() {
     Map<Integer, Integer> result = new HashMap<>();
     for (Vertex n : this.getNodes()) {
-      result.put(n.getId(), n.degree());
+      result.put(n.getId(), n.getDegree());
     }
     return result;
   }
 
   public int getDegree(int id) {
-    return this.getNode(id).degree();
+    return this.getNode(id).getDegree();
   }
 
   public int getDegree(Vertex v) {
@@ -133,7 +129,7 @@ public class Graph {
     return this.vertices.size();
   }
 
-  public int getNumOfEdges(){
+  public int getNumOfEdges() {
     return this.getEdges().size();
   }
 
@@ -142,9 +138,6 @@ public class Graph {
   }
 
   public void empty() {
-    for (Vertex n : this.getNodes()) {
-      n.removeNeighbors();
-    }
     this.vertices.clear();
   }
 
@@ -155,7 +148,7 @@ public class Graph {
   public Graph copy() {
     Graph g = new Graph();
     for (Edge e : this.getEdges()) {
-      g.addEdge(e);
+      g.addEdge(e.getStart().getId(), e.getEnd().getId());
     }
     return g;
   }

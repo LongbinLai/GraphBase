@@ -33,6 +33,6 @@ public class Edge {
 
   @Override
   public String toString() {
-    return "(" + start.getId() + "," + end.getId() + ")";
+    return "(" + start + "," + end + ")";
   }
 }

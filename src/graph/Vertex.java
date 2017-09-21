@@ -17,31 +17,33 @@ public class Vertex {
     return id;
   }
 
-  public Collection<Edge> getEdges(){
+  public Edge addNeighbor(Vertex v) {
+    if (this.getId() != v.getId()) {
+      Edge e = new Edge(this, v);
+      this.edges.put(v.getId(), e);
+      return e;
+    }
+    return null;
+  }
+
+  public Collection<Edge> getEdges() {
     return this.edges.values();
   }
 
   public List<Vertex> getNeighbors() {
     List<Vertex> neighbors = new LinkedList<>();
-    for (Edge e : this.getEdges()){
+    for (Edge e : this.getEdges()) {
       neighbors.add(e.getEnd());
     }
     return neighbors;
   }
 
-  public void addNeighbor(Vertex v) {
-    if (this.getId() != v.getId()) {
-      Edge e = new Edge(this,v);
-      this.edges.put(v.getId(), e);
-    }
+  public void removeNeighbor(int id) {
+    this.edges.remove(id);
   }
 
   public void removeNeighbor(Vertex v) {
     this.removeNeighbor(v.getId());
-  }
-
-  public void removeNeighbor(int id) {
-    this.edges.remove(id);
   }
 
   public void removeNeighbors() {
@@ -50,7 +52,7 @@ public class Vertex {
     }
   }
 
-  public int degree() {
+  public int getDegree() {
     return edges.size();
   }
 
