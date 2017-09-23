@@ -20,6 +20,9 @@
 # XML Files #
 *.xml
 
+# IML Files #
+*.iml
+
 #Dir
 /out
 /lib
