@@ -3,7 +3,13 @@ package graph;
 public class UnidirectedGraph extends Graph {
 
   public Vertex deleteVertex(int vertexIndex) {
-    return vertices.remove(vertexIndex);
+    Vertex deletedVertex = vertices.remove(vertexIndex);
+    if (deletedVertex != null) {
+      for (Integer key : vertices.keySet()) {
+        vertices.get(key).deleteAdjEdge(vertexIndex);
+      }
+    }
+    return deletedVertex;
   }
 
   public int addEdge(int fromId, int toId) {
