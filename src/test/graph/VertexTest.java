@@ -2,8 +2,7 @@ package test.graph;
 
 import graph.Edge;
 import graph.Vertex;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
@@ -14,7 +13,7 @@ import org.junit.After;
  *
  * @author <Zhengyi Yang>
  * @version 1.0
- * @since <pre>Sep 19, 2017</pre>
+ * @since <pre>Sep 26, 2017</pre>
  */
 public class VertexTest {
 
@@ -31,74 +30,92 @@ public class VertexTest {
    */
   @Test
   public void testGetId() throws Exception {
-    Vertex v0 = new Vertex(0);
-    Assert.assertEquals(0, v0.getId());
+    Vertex v = new Vertex(0);
+    Assert.assertEquals(0, v.getId());
   }
 
   /**
-   * Method: addNeighbor(Vertex v); getNeighbors(); removeNeighbor(int id); removeNeighbor(Vertex
-   * v); testRemoveNeighbors()
+   * Method: addNeighbor(int id); addNeighbor(Vertex v); getNeighbors()
    */
   @Test
-  public void testAddGetRemoveNeighbor() throws Exception {
-    Vertex v0 = new Vertex(0);
+  public void testAddGetNeighbor() throws Exception {
+    Vertex v = new Vertex(0);
+    v.addNeighbor(1);
+    v.addNeighbor(new Vertex(2));
+    Set<Integer> neighbors = v.getNeighbors();
+    Assert.assertEquals(2, neighbors.size());
+    Assert.assertTrue(neighbors.containsAll(Arrays.asList(1, 2)));
+  }
+
+
+  /**
+   * Method: isAdjTo(int id); isAdjTo(Vertex v)
+   */
+  @Test
+  public void testIsAdjTo() throws Exception {
+    Vertex v = new Vertex(0);
     Vertex v1 = new Vertex(1);
-    Vertex v2 = new Vertex(2);
-    Vertex v3 = new Vertex(3);
-    v0.addNeighbor(v1);
-    v0.addNeighbor(v2);
-    v0.addNeighbor(v3);
-    List<Vertex> v0_adj = v0.getNeighbors();
-    Assert.assertEquals(3, v0_adj.size());
-    Assert.assertTrue(v0_adj.contains(v1));
-    Assert.assertTrue(v0_adj.contains(v2));
-    Assert.assertTrue(v0_adj.contains(v3));
+    v.addNeighbor(v1);
+    v.addNeighbor(2);
+    Assert.assertTrue(v.isAdjTo(v1));
+    Assert.assertTrue(v.isAdjTo(2));
+    Assert.assertFalse(v.isAdjTo(3));
+    Assert.assertFalse(v.isAdjTo(new Vertex(4)));
+  }
 
-    v0.removeNeighbor(1);
-    v0_adj = v0.getNeighbors();
-    Assert.assertEquals(2, v0_adj.size());
-    Assert.assertFalse(v0_adj.contains(v1));
 
-    v0.removeNeighbor(v2);
-    v0_adj = v0.getNeighbors();
-    Assert.assertEquals(1, v0_adj.size());
-
-    v0.removeNeighbors();
-    v0_adj = v0.getNeighbors();
-    Assert.assertEquals(0, v0_adj.size());
+  /**
+   * Method: addEdge(Edge e); getEdges()
+   */
+  @Test
+  public void testAddGetEdges() throws Exception {
+    Vertex v = new Vertex(0);
+    Edge e = new Edge(0, 1);
+    Edge e1 = v.addEdge(e);
+    Assert.assertEquals(e, e1);
+    Edge e2 = v.addEdge(new Edge(2, 0));
+    Collection<Edge> edges = v.getEdges();
+    Assert.assertEquals(2, edges.size());
+    Assert.assertTrue(edges.containsAll(Arrays.asList(e1, e2)));
+    Assert.assertNull(v.addEdge(new Edge(3, 4)));
   }
 
   /**
-   * Method: getEdges()
+   * Method: removeNeighbor(int id); removeNeighbor(Vertex v); removeNeighbors()
    */
   @Test
-  public void testGetEdges() throws Exception {
-    Vertex v0 = new Vertex(0);
+  public void testRemoveNeighbor() throws Exception {
+    Vertex v = new Vertex(0);
     Vertex v1 = new Vertex(1);
-    Vertex v2 = new Vertex(2);
-    Edge e1 =v0.addNeighbor(v1);
-    Edge e2= v0.addNeighbor(v2);
-    Collection<Edge> edges = v0.getEdges();
-    Assert.assertEquals(2,edges.size());
-    Assert.assertTrue(edges.contains(e1));
-    Assert.assertTrue(edges.contains(e2));
-  }
+    v.addNeighbor(v1);
+    v.addNeighbor(2);
+    v.addNeighbor(3);
+    v.addNeighbor(4);
+    v.removeNeighbor(v1);
+    Assert.assertEquals(3, v.getNeighbors().size());
+    Assert.assertFalse(v.getNeighbors().contains(1));
+    v.removeNeighbor(2);
+    Assert.assertEquals(2, v.getNeighbors().size());
+    Assert.assertFalse(v.getNeighbors().contains(2));
+    v.removeNeighbors();
+    Assert.assertEquals(0, v.getNeighbors().size());
 
+    Assert.assertNull(v.removeNeighbor(1));
+  }
 
   /**
    * Method: getDegree()
    */
   @Test
   public void testGetDegree() throws Exception {
-    Vertex v0 = new Vertex(0);
-    Vertex v1 = new Vertex(1);
-    Vertex v2 = new Vertex(2);
-
-    Assert.assertEquals(0,v0.getDegree());
-    v0.addNeighbor(v1);
-    Assert.assertEquals(1,v0.getDegree());
-    v0.addNeighbor(v2);
-    Assert.assertEquals(2,v0.getDegree());
+    Vertex v = new Vertex(0);
+    Assert.assertEquals(0, v.getDegree());
+    v.addNeighbor(1);
+    Assert.assertEquals(1, v.getDegree());
+    v.addNeighbor(2);
+    Assert.assertEquals(2, v.getDegree());
+    v.removeNeighbor(1);
+    Assert.assertEquals(1, v.getDegree());
   }
 
   /**

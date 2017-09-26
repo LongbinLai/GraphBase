@@ -29,11 +29,9 @@ public class EdgeTest {
    */
   @Test
   public void testGetSetStartEnd() throws Exception {
-    Vertex v0 = new Vertex(0);
-    Vertex v1 = new Vertex(1);
-    Edge e = new Edge(v0, v1);
-    Assert.assertEquals(v0, e.getStart());
-    Assert.assertEquals(v1, e.getEnd());
+    Edge e = new Edge(0, 1);
+    Assert.assertEquals(0, e.getStart());
+    Assert.assertEquals(1, e.getEnd());
   }
 
   /**
@@ -41,10 +39,8 @@ public class EdgeTest {
    */
   @Test
   public void testToString() throws Exception {
-    Vertex v0 = new Vertex(0);
-    Vertex v1 = new Vertex(1);
-    Edge e = new Edge(v0, v1);
-    Assert.assertEquals("(" + v0 + "," + v1 + ")", e.toString());
+    Edge e = new Edge(0, 1);
+    Assert.assertEquals("(0,1)", e.toString());
   }
 
 

@@ -2,32 +2,27 @@ package graph;
 
 public class Edge {
 
-  private Vertex start;
-  private Vertex end;
+  private int start;
+  private int end;
 
-  public Edge(Vertex start, Vertex end) {
+  public Edge(int start, int end) {
     this.start = start;
     this.end = end;
   }
 
-  public Edge(int start, int end) {
-    this.start = new Vertex(start);
-    this.end = new Vertex(end);
-  }
-
-  public Vertex getStart() {
+  public int getStart() {
     return start;
   }
 
-  public void setStart(Vertex start) {
+  public void setStart(int start) {
     this.start = start;
   }
 
-  public Vertex getEnd() {
+  public int getEnd() {
     return end;
   }
 
-  public void setEnd(Vertex end) {
+  public void setEnd(int end) {
     this.end = end;
   }
 

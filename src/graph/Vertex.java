@@ -5,57 +5,70 @@ import java.util.*;
 public class Vertex {
 
   private int id;
-  private Map<Integer, Edge> edges;
+  private Map<Integer, Edge> adjEdges; //the Map is indexed with the edge's destination node id.
 
 
   public Vertex(int id) {
     this.id = id;
-    this.edges = new HashMap<>();
+    this.adjEdges = new HashMap<>();
+  }
+
+  public Edge addEdge(Edge e) {
+    int u = e.getStart();
+    int v = e.getEnd();
+    if (this.getId() == u) {
+      this.adjEdges.put(v, e);
+    } else if (this.getId() == v) {
+      this.adjEdges.put(u, e);
+    } else {
+      return null;
+    }
+    return e;
   }
 
   public int getId() {
     return id;
   }
 
+  public Edge addNeighbor(int id) {
+    return this.addEdge(new Edge(this.getId(), id));
+  }
+
   public Edge addNeighbor(Vertex v) {
-    if (this.getId() != v.getId()) {
-      Edge e = new Edge(this, v);
-      this.edges.put(v.getId(), e);
-      return e;
-    }
-    return null;
+    return this.addNeighbor(v.getId());
+  }
+
+  public boolean isAdjTo(int id) {
+    return this.adjEdges.containsKey(id);
+  }
+
+  public boolean isAdjTo(Vertex v) {
+    return this.isAdjTo(v.getId());
   }
 
   public Collection<Edge> getEdges() {
-    return this.edges.values();
+    return this.adjEdges.values();
   }
 
-  public List<Vertex> getNeighbors() {
-    List<Vertex> neighbors = new LinkedList<>();
-    for (Edge e : this.getEdges()) {
-      neighbors.add(e.getEnd());
-    }
-    return neighbors;
+  public Set<Integer> getNeighbors() {
+    return this.adjEdges.keySet();
   }
 
-  public void removeNeighbor(int id) {
-    this.edges.remove(id);
+  public Edge removeNeighbor(int id) {
+    return this.adjEdges.remove(id);
   }
 
-  public void removeNeighbor(Vertex v) {
-    this.removeNeighbor(v.getId());
+  public Edge removeNeighbor(Vertex v) {
+    return this.removeNeighbor(v.getId());
   }
 
   public void removeNeighbors() {
-    for (int id : this.edges.keySet()) {
-      this.removeNeighbor(id);
-    }
+    this.adjEdges.clear();
   }
 
   public int getDegree() {
-    return edges.size();
+    return adjEdges.size();
   }
-
 
   @Override
   public String toString() {
@@ -64,8 +77,8 @@ public class Vertex {
     result.append(this.getId());
     result.append("\n  - Neighbors: ");
 
-    for (Vertex v : this.getNeighbors()) {
-      result.append(v.getId());
+    for (int v : this.getNeighbors()) {
+      result.append(v);
       result.append(", ");
     }
     result.append("\n");
