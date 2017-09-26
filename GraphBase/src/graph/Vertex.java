@@ -18,22 +18,28 @@ public class Vertex {
     return vertexId;
   }
 
-  public Map getAdjEdges() {
+  public Map<Integer, Edge> getAdjEdges() {
     return adjEdges;
   }
 
-  public void addAdjEdge(Edge newEdge) {
+  public boolean addFromAdjEdge(Edge newEdge) {
     if (newEdge.getFromId() != vertexId) {
-      throw new VerifyError("The edge is not from this vertex");
+      return false; // (represents the edge is not from the vertex)
     }
     adjEdges.put(newEdge.getToId(), newEdge);// use the tovertex'id to be the newedge's id;
+    return true;// normal case
   }
 
-  public void deleteAdjEdge(Integer edgeId) {
-    if (!adjEdges.containsKey(edgeId)) {
-      throw new NoSuchElementException("The edge is not in adjEdges");
+  public boolean addToAdjEdge(Edge newEdge) {
+    if (newEdge.getToId() != vertexId) {
+      return false;//(represents the edge is not to this vertex)
     }
-    adjEdges.remove(edgeId);
+    adjEdges.put(newEdge.getFromId(), newEdge);
+    return true;
+  }
+
+  public Edge deleteAdjEdge(Integer edgeId) {
+    return adjEdges.remove(edgeId);
   }
 
   public boolean isAdjacent(int vertexId) {

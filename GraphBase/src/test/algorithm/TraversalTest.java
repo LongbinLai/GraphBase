@@ -1,7 +1,7 @@
 package test.algorithm;
 
 import algorithm.Traversal;
-import graph.DiGraph;
+import graph.DirectedGraph;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +31,7 @@ public class TraversalTest {
   public void testBFSForGraphEntryId() throws Exception {
 //TODO: Test goes here...
     Traversal newSearch = new Traversal();
-    DiGraph graph = new DiGraph();
+    DirectedGraph graph = new DirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     graph.addVertex(3);
@@ -64,7 +64,7 @@ public class TraversalTest {
   public void testDFSForGraphEntryId() throws Exception {
 //TODO: Test goes here...
     Traversal newSearch = new Traversal();
-    DiGraph graph = new DiGraph();
+    DirectedGraph graph = new DirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     graph.addVertex(3);

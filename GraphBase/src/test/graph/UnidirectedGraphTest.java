@@ -1,8 +1,7 @@
 package test.graph;
 
 import graph.Edge;
-import graph.Graph;
-import graph.UnDiGraph;
+import graph.UnidirectedGraph;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
@@ -10,13 +9,13 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 
 /**
- * UnDiGraph Tester.
+ * UnidirectedGraph Tester.
  *
  * @author <Authors name>
  * @version 1.0
  * @since <pre>���� 22, 2017</pre>
  */
-public class UnDiGraphTest {
+public class UnidirectedGraphTest {
 
   @Before
   public void before() throws Exception {
@@ -29,7 +28,7 @@ public class UnDiGraphTest {
   @Test
   public void testAddEdgeForFromIdToId() throws Exception {
 //TODO: Test goes here...
-    UnDiGraph graph = new UnDiGraph();
+    UnidirectedGraph graph = new UnidirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     graph.addVertex(3);
@@ -42,7 +41,7 @@ public class UnDiGraphTest {
   @Test
   public void testAddEdgeEdge() throws Exception {
 //TODO: Test goes here...
-    UnDiGraph graph = new UnDiGraph();
+    UnidirectedGraph graph = new UnidirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     Edge edge = new Edge(1, 2);
@@ -54,7 +53,7 @@ public class UnDiGraphTest {
   @Test
   public void testDeleteEdgeForFromIdToId() throws Exception {
 //TODO: Test goes here...
-    UnDiGraph graph = new UnDiGraph();
+    UnidirectedGraph graph = new UnidirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     Edge edge = new Edge(1, 2);
@@ -67,7 +66,7 @@ public class UnDiGraphTest {
   @Test
   public void testDeleteEdgeForFromVertexToVertex() throws Exception {
 //TODO: Test goes here...
-    UnDiGraph graph = new UnDiGraph();
+    UnidirectedGraph graph = new UnidirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     Edge edge = new Edge(1, 2);
@@ -80,7 +79,7 @@ public class UnDiGraphTest {
   @Test
   public void testDeleteEdgeEdge() throws Exception {
 //TODO: Test goes here...
-    UnDiGraph graph = new UnDiGraph();
+    UnidirectedGraph graph = new UnidirectedGraph();
     graph.addVertex(1);
     graph.addVertex(2);
     Edge edge = new Edge(1, 2);

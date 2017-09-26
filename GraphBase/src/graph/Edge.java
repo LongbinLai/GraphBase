@@ -17,4 +17,5 @@ public class Edge {
   public int getFromId() {
     return fromId;
   }
+
 }
