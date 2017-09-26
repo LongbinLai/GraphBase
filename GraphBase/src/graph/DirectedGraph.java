@@ -3,7 +3,17 @@ package graph;
 public class DirectedGraph extends Graph {
 
   public Vertex deleteVertex(int vertexIndex) {
-     return vertices.remove(vertexIndex);
+    Vertex deletedVertex = vertices.remove(vertexIndex);
+    if (deletedVertex != null) {
+      for (Integer key : vertices.keySet()) {
+        vertices.get(key).deleteAdjEdge(vertexIndex);
+      }
+    }
+    return deletedVertex;
+  }
+
+  public Vertex deleteVertex(Vertex vertex)  {
+    return deleteVertex(vertex.getId());
   }
 
   public int addEdge(int fromId, int toId) {
