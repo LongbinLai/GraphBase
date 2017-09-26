@@ -2,6 +2,16 @@ package graph;
 
 public class DirectedGraph extends Graph {
 
+  public Vertex deleteVertex(int vertexIndex) {
+    Vertex deletedVertex = vertices.remove(vertexIndex);
+    if (deletedVertex != null) {
+      for (Integer key : vertices.keySet()) {
+        vertices.get(key).deleteAdjEdge(vertexIndex);
+      }
+    }
+    return deletedVertex;
+  }
+
   public int addEdge(int fromId, int toId) {
     addVertex(fromId);
     addVertex(toId);

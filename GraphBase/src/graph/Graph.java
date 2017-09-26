@@ -23,9 +23,9 @@ public abstract class Graph {
     return true;
   }
 
-  public Vertex deleteVertex(int vertexId) {
+  public abstract Vertex deleteVertex(int vertexId); /*{
     return vertices.remove(vertexId);
-  }
+  }*/
 
   public abstract int addEdge(int fromId, int toId);
 

@@ -2,6 +2,10 @@ package graph;
 
 public class UnidirectedGraph extends Graph {
 
+  public Vertex deleteVertex(int vertexIndex) {
+    return vertices.remove(vertexIndex);
+  }
+
   public int addEdge(int fromId, int toId) {
     this.addVertex(fromId);
     this.addVertex(toId);
