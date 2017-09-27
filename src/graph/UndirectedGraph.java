@@ -1,6 +1,6 @@
 package graph;
 
-public class UndirectedGraph extends AbstractGraph {
+public class UndirectedGraph extends Graph {
 
   @Override
   public Vertex removeNode(int id) {

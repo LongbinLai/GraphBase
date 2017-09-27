@@ -46,24 +46,34 @@ public class TraversalTest {
   }
 
   /**
-   * Method: dfs(AbstractGraph dg, int start)
+   * Method: dfs(Graph dg, int start)
    */
   @Test
   public void testDfs() throws Exception {
     List<Integer> order = traversal.dfs(dg, 0);
     Assert.assertTrue(order.equals(Arrays.asList(0, 2, 4, 1, 3)));
+    order = traversal.dfs(dg);
+    Assert.assertTrue(order.equals(Arrays.asList(0, 2, 4, 1, 3)));
+
     order = traversal.dfs(g, 0);
+    Assert.assertTrue(order.equals(Arrays.asList(0, 2, 4, 1, 3)));
+    order = traversal.dfs(g);
     Assert.assertTrue(order.equals(Arrays.asList(0, 2, 4, 1, 3)));
   }
 
   /**
-   * Method: bfs(AbstractGraph dg, int start)
+   * Method: bfs(Graph dg, int start)
    */
   @Test
   public void testBfs() throws Exception {
     List<Integer> order = traversal.bfs(dg, 0);
     Assert.assertTrue(order.equals(Arrays.asList(0, 1, 2, 3, 4)));
+    traversal.bfs(dg);
+    Assert.assertTrue(order.equals(Arrays.asList(0, 1, 2, 3, 4)));
+
     order = traversal.bfs(g, 0);
+    Assert.assertTrue(order.equals(Arrays.asList(0, 1, 2, 3, 4)));
+    order = traversal.bfs(g);
     Assert.assertTrue(order.equals(Arrays.asList(0, 1, 2, 3, 4)));
   }
 

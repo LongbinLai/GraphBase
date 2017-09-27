@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Traversal {
 
-  public static List<Integer> dfs(AbstractGraph g) {
+  public static List<Integer> dfs(Graph g) {
     int start = g.getNodesID().iterator().next();
     return dfs(g, start);
   }
 
-  public static List<Integer> dfs(AbstractGraph g, int start) {
+  public static List<Integer> dfs(Graph g, int start) {
     List<Integer> order = new LinkedList<>();
     Set<Integer> visited = new HashSet<>();
     Stack<Integer> s = new Stack<>();
@@ -33,12 +33,12 @@ public class Traversal {
     return order;
   }
 
-  public static List<Integer> bfs(AbstractGraph g) {
+  public static List<Integer> bfs(Graph g) {
     int start = g.getNodesID().iterator().next();
     return bfs(g, start);
   }
 
-  public static List<Integer> bfs(AbstractGraph g, int start) {
+  public static List<Integer> bfs(Graph g, int start) {
     List<Integer> order = new LinkedList<>();
     Set<Integer> visited = new HashSet<>();
     LinkedList<Integer> q = new LinkedList<>();

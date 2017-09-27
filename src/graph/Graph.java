@@ -3,11 +3,11 @@ package graph;
 import java.util.*;
 
 
-public abstract class AbstractGraph {
+public abstract class Graph {
 
   private Map<Integer, Vertex> vertices;
 
-  public AbstractGraph() {
+  public Graph() {
     this.vertices = new HashMap<>();
   }
 
