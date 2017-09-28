@@ -1,6 +1,6 @@
 package graph;
 
-public class Edge {
+public class Edge implements Cloneable {
 
   private int begin;
   private int end;
@@ -26,10 +26,6 @@ public class Edge {
     this.end = end;
   }
 
-  public Edge copy() {
-    return new Edge(this.getBegin(), this.getEnd());
-  }
-
   public void reverse() {
     int start = this.getBegin();
     int end = this.getEnd();
@@ -38,9 +34,14 @@ public class Edge {
   }
 
   public Edge reversed() {
-    Edge e = this.copy();
+    Edge e = (Edge) this.clone();
     e.reverse();
     return e;
+  }
+
+  @Override
+  public Object clone() {
+    return new Edge(this.getBegin(), this.getEnd());
   }
 
   @Override

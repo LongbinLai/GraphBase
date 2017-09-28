@@ -28,6 +28,15 @@ public class DirectedGraph extends Graph {
     return begin.removeNeighbor(e.getEnd());
   }
 
+  @Override
+  public Object clone() {
+    DirectedGraph g = new DirectedGraph();
+    for (Edge e : this.getEdges()) {
+      g.addEdge((Edge) e.clone());
+    }
+    return g;
+  }
+
   public UndirectedGraph toUndirected() {
     UndirectedGraph g = new UndirectedGraph();
     for (Edge e : this.getEdges()) {
