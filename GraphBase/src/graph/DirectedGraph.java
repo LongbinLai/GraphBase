@@ -16,22 +16,22 @@ public class DirectedGraph extends Graph {
     return deleteVertex(vertex.getId());
   }
 
-  public int addEdge(int fromId, int toId) {
+  public boolean addEdge(int fromId, int toId) {
     addVertex(fromId);
     addVertex(toId);
     if (!this.vertices.get(fromId).isAdjacent(toId)) {
       Edge newEdge = new Edge(fromId, toId);
       this.vertices.get(fromId).addFromAdjEdge(newEdge);
-      return 0;// 0 represents the edge is not existed , otherwise return 1;
+      return false;// 0 represents the edge is not existed , otherwise return 1;
     }
-    return 1;
+    return true;
   }
 
-  public int addEdge(Vertex fromVertex, Vertex toVertex) {
+  public boolean addEdge(Vertex fromVertex, Vertex toVertex) {
     return addEdge(fromVertex.getId(), toVertex.getId());
   }
 
-  public int addEdge(Edge edge) {
+  public boolean addEdge(Edge edge) {
     return addEdge(edge.getFromId(), edge.getToId());
   }
 

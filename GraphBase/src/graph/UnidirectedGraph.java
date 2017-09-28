@@ -17,23 +17,23 @@ public class UnidirectedGraph extends Graph {
     return deleteVertex(vertex.getId());
   }
 
-  public int addEdge(int fromId, int toId) {
+  public boolean addEdge(int fromId, int toId) {
     this.addVertex(fromId);
     this.addVertex(toId);
     if (vertices.get(fromId).isAdjacent(toId)) {
-      return 0;//represents the edge has already existed.
+      return false;//represents the edge has already existed.
     }
     Edge newEdge = new Edge(fromId, toId);
     vertices.get(fromId).addFromAdjEdge(newEdge);
     vertices.get(toId).addToAdjEdge(newEdge);
-    return 1; // normal return
+    return true; // normal return
   }
 
-  public int addEdge(Vertex fromVertex, Vertex toVertex) {
+  public boolean addEdge(Vertex fromVertex, Vertex toVertex) {
     return addEdge(fromVertex.getId(), toVertex.getId());
   }
 
-  public int addEdge(Edge edge) {
+  public boolean addEdge(Edge edge) {
     return addEdge(edge.getFromId(), edge.getToId());
   }
 
