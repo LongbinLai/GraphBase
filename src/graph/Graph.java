@@ -1,6 +1,10 @@
 package graph;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Collection;
+import java.util.HashSet;
 
 
 public abstract class Graph {
@@ -11,44 +15,28 @@ public abstract class Graph {
     this.vertices = new HashMap<>();
   }
 
-  public Vertex getNode(int id) {
+  public Vertex getVertex(int id) {
     return this.vertices.get(id);
   }
 
-  public Set<Integer> getNodesID() {
-    return vertices.keySet();
-  }
-
-  public Collection<Vertex> getNodes() {
+  public Collection<Vertex> getVertices() {
     return vertices.values();
   }
 
-  public Vertex addNode(Vertex v) {
-    if (this.contains(v)) {
-      return this.getNode(v.getId());
+  public Vertex addVertex(Vertex v) {
+    if (this.contains(v.getId())) {
+      return this.getVertex(v.getId()); // return the existing vertex if the id already exists
     }
     this.vertices.put(v.getId(), v);
     return v;
   }
 
-  public Vertex addNode(int id) {
-    return this.addNode(new Vertex(id));
+  public Vertex addVertex(int id) {
+    return this.addVertex(new Vertex(id));
   }
 
-  public Vertex addNode() {
-    if (this.isEmpty()) {
-      return this.addNode(0);
-    }
-    int maxId = Collections.max(this.vertices.keySet());
-    return this.addNode(maxId + 1);
-  }
-
-  public Vertex removeNode(int id) {
+  public Vertex removeVertex(int id) {
     return this.vertices.remove(id);
-  }
-
-  public Vertex removeNode(Vertex v) {
-    return this.removeNode(v.getId());
   }
 
   public abstract Edge addEdge(Edge e);
@@ -69,9 +57,9 @@ public abstract class Graph {
     }
   }
 
-  public Set<Edge> getEdges() {
+  public Collection<Edge> getEdges() {
     Set<Edge> edges = new HashSet<>();
-    for (Vertex v : this.getNodes()) {
+    for (Vertex v : this.getVertices()) {
       for (Edge edge : v.getEdges()) {
         edges.add(edge);
       }
@@ -83,24 +71,16 @@ public abstract class Graph {
     return this.vertices.containsKey(id);
   }
 
-  public boolean contains(Vertex v) {
-    return this.contains(v.getId());
-  }
-
-  public int size() {
+  public int getNumOfVertices() {
     return this.vertices.size();
   }
 
-  public int getNumOfEdges() {
-    return this.getEdges().size();
-  }
-
   public boolean isEmpty() {
-    return this.size() == 0;
+    return this.getNumOfVertices() == 0;
   }
 
   public void clear() {
-    for (Vertex v : this.getNodes()) {
+    for (Vertex v : this.getVertices()) {
       v.removeNeighbors();
     }
     this.vertices.clear();
@@ -114,7 +94,7 @@ public abstract class Graph {
     if (isEmpty()) {
       result.append("  Empty graph");
     } else {
-      for (Vertex v : this.getNodes()) {
+      for (Vertex v : this.getVertices()) {
         result.append(v.toString());
       }
     }

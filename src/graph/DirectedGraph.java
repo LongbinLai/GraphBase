@@ -3,10 +3,10 @@ package graph;
 public class DirectedGraph extends Graph {
 
   @Override
-  public Vertex removeNode(int id) {
-    Vertex v = super.removeNode(id);
+  public Vertex removeVertex(int id) {
+    Vertex v = super.removeVertex(id);
     if (v != null) {
-      for (Vertex n : this.getNodes()) {
+      for (Vertex n : this.getVertices()) {
         n.removeNeighbor(id);
       }
     }
@@ -15,12 +15,24 @@ public class DirectedGraph extends Graph {
 
   @Override
   public Edge addEdge(Edge e) {
-    this.addNode(e.getEnd());
-    return this.addNode(e.getStart()).addEdge(e);
+    this.addVertex(e.getEnd());
+    return this.addVertex(e.getBegin()).addEdge(e);
   }
 
   @Override
   public Edge removeEdge(Edge e) {
-    return this.getNode(e.getStart()).removeNeighbor(e.getEnd());
+    Vertex begin = this.getVertex(e.getBegin());
+    if (begin == null) {
+      return null; // return null if the edge doesn't exist
+    }
+    return begin.removeNeighbor(e.getEnd());
+  }
+
+  public UndirectedGraph toUndirected() {
+    UndirectedGraph g = new UndirectedGraph();
+    for (Edge e : this.getEdges()) {
+      g.addEdge(e);
+    }
+    return g;
   }
 }

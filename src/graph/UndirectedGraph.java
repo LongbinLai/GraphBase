@@ -3,11 +3,11 @@ package graph;
 public class UndirectedGraph extends Graph {
 
   @Override
-  public Vertex removeNode(int id) {
-    Vertex v = super.removeNode(id);
+  public Vertex removeVertex(int id) {
+    Vertex v = super.removeVertex(id);
     if (v != null) {
       for (int adjId : v.getNeighbors()) {
-        this.getNode(adjId).removeNeighbor(id);
+        this.getVertex(adjId).removeNeighbor(id);
       }
     }
     return v;
@@ -15,13 +15,27 @@ public class UndirectedGraph extends Graph {
 
   @Override
   public Edge addEdge(Edge e) {
-    this.addNode(e.getStart()).addEdge(e);
-    return this.addNode(e.getEnd()).addEdge(e);
+    this.addVertex(e.getBegin()).addEdge(e);
+    return this.addVertex(e.getEnd()).addEdge(e);
   }
 
   @Override
   public Edge removeEdge(Edge e) {
-    this.getNode(e.getStart()).removeNeighbor(e.getEnd());
-    return this.getNode(e.getEnd()).removeNeighbor(e.getStart());
+    Vertex begin = this.getVertex(e.getBegin());
+    Vertex end = this.getVertex(e.getEnd());
+    if (begin == null || end == null) {
+      return null; // return null if the edge doesn't exist
+    }
+    begin.removeNeighbor(e.getEnd());
+    return end.removeNeighbor(e.getBegin());
+  }
+
+  public DirectedGraph toDirected() {
+    DirectedGraph g = new DirectedGraph();
+    for (Edge e : this.getEdges()) {
+      g.addEdge(e);
+      g.addEdge(e.reversed());
+    }
+    return g;
   }
 }

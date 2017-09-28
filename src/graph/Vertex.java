@@ -1,11 +1,14 @@
 package graph;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collection;
+import java.util.Set;
 
 public class Vertex {
 
   private int id;
-  private Map<Integer, Edge> adjEdges; //the Map is indexed with the edge's destination node id.
+  private Map<Integer, Edge> adjEdges; //the Map is indexed with the edge's destination node id
 
 
   public Vertex(int id) {
@@ -14,14 +17,14 @@ public class Vertex {
   }
 
   public Edge addEdge(Edge e) {
-    int u = e.getStart();
+    int u = e.getBegin();
     int v = e.getEnd();
     if (this.getId() == u) {
       this.adjEdges.put(v, e);
     } else if (this.getId() == v) {
       this.adjEdges.put(u, e);
     } else {
-      return null;
+      return null; //return null if fail to add
     }
     return e;
   }
@@ -34,16 +37,8 @@ public class Vertex {
     return this.addEdge(new Edge(this.getId(), id));
   }
 
-  public Edge addNeighbor(Vertex v) {
-    return this.addNeighbor(v.getId());
-  }
-
   public boolean isAdjTo(int id) {
     return this.adjEdges.containsKey(id);
-  }
-
-  public boolean isAdjTo(Vertex v) {
-    return this.isAdjTo(v.getId());
   }
 
   public Collection<Edge> getEdges() {
@@ -56,10 +51,6 @@ public class Vertex {
 
   public Edge removeNeighbor(int id) {
     return this.adjEdges.remove(id);
-  }
-
-  public Edge removeNeighbor(Vertex v) {
-    return this.removeNeighbor(v.getId());
   }
 
   public void removeNeighbors() {

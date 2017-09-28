@@ -1,16 +1,21 @@
 package algorithm;
 
-import graph.*;
-import java.util.*;
+import graph.Graph;
+import java.util.Collection;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Stack;
 
 public class Traversal {
 
-  public static List<Integer> dfs(Graph g) {
-    int start = g.getNodesID().iterator().next();
-    return dfs(g, start);
-  }
-
   public static List<Integer> dfs(Graph g, int start) {
+    if (!g.contains(start)) {
+      return null;
+    }
+
     List<Integer> order = new LinkedList<>();
     Set<Integer> visited = new HashSet<>();
     Stack<Integer> s = new Stack<>();
@@ -23,7 +28,8 @@ public class Traversal {
       v = s.pop();
       order.add(v);
 
-      for (int n : g.getNode(v).getNeighbors()) {
+      Collection<Integer> neighbors = g.getVertex(v).getNeighbors();
+      for (int n : neighbors) {
         if (!visited.contains(n)) {
           s.push(n);
           visited.add(n);
@@ -33,27 +39,27 @@ public class Traversal {
     return order;
   }
 
-  public static List<Integer> bfs(Graph g) {
-    int start = g.getNodesID().iterator().next();
-    return bfs(g, start);
-  }
-
   public static List<Integer> bfs(Graph g, int start) {
+    if (!g.contains(start)) {
+      return null;
+    }
+
     List<Integer> order = new LinkedList<>();
     Set<Integer> visited = new HashSet<>();
-    LinkedList<Integer> q = new LinkedList<>();
+    Queue<Integer> q = new LinkedList<>();
 
-    q.addLast(start);
+    q.add(start);
     visited.add(start);
 
     int v;
     while (!q.isEmpty()) {
-      v = q.removeFirst();
+      v = q.poll();
       order.add(v);
 
-      for (int n : g.getNode(v).getNeighbors()) {
+      Collection<Integer> neighbors = g.getVertex(v).getNeighbors();
+      for (int n : neighbors) {
         if (!visited.contains(n)) {
-          q.addLast(n);
+          q.add(n);
           visited.add(n);
         }
       }

@@ -2,11 +2,11 @@ package test.graph;
 
 import graph.Edge;
 import graph.Vertex;
-import java.util.*;
+import java.util.Set;
+import java.util.Collection;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 
 /**
  * Vertex Tester.
@@ -16,14 +16,6 @@ import org.junit.After;
  * @since <pre>Sep 26, 2017</pre>
  */
 public class VertexTest {
-
-  @Before
-  public void before() throws Exception {
-  }
-
-  @After
-  public void after() throws Exception {
-  }
 
   /**
    * Method: getId()
@@ -41,7 +33,7 @@ public class VertexTest {
   public void testAddGetNeighbor() throws Exception {
     Vertex v = new Vertex(0);
     v.addNeighbor(1);
-    v.addNeighbor(new Vertex(2));
+    v.addNeighbor(2);
     Set<Integer> neighbors = v.getNeighbors();
     Assert.assertEquals(2, neighbors.size());
     Assert.assertTrue(neighbors.containsAll(Arrays.asList(1, 2)));
@@ -54,13 +46,11 @@ public class VertexTest {
   @Test
   public void testIsAdjTo() throws Exception {
     Vertex v = new Vertex(0);
-    Vertex v1 = new Vertex(1);
-    v.addNeighbor(v1);
+    v.addNeighbor(1);
     v.addNeighbor(2);
-    Assert.assertTrue(v.isAdjTo(v1));
+    Assert.assertTrue(v.isAdjTo(1));
     Assert.assertTrue(v.isAdjTo(2));
     Assert.assertFalse(v.isAdjTo(3));
-    Assert.assertFalse(v.isAdjTo(new Vertex(4)));
   }
 
 
@@ -86,12 +76,11 @@ public class VertexTest {
   @Test
   public void testRemoveNeighbor() throws Exception {
     Vertex v = new Vertex(0);
-    Vertex v1 = new Vertex(1);
-    v.addNeighbor(v1);
+    v.addNeighbor(1);
     v.addNeighbor(2);
     v.addNeighbor(3);
     v.addNeighbor(4);
-    v.removeNeighbor(v1);
+    v.removeNeighbor(1);
     Assert.assertEquals(3, v.getNeighbors().size());
     Assert.assertFalse(v.getNeighbors().contains(1));
     v.removeNeighbor(2);
@@ -116,14 +105,6 @@ public class VertexTest {
     Assert.assertEquals(2, v.getDegree());
     v.removeNeighbor(1);
     Assert.assertEquals(1, v.getDegree());
-  }
-
-  /**
-   * Method: toString()
-   */
-  @Test
-  public void testToString() throws Exception {
-//TODO: Test goes here... 
   }
 
 

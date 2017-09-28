@@ -1,11 +1,8 @@
 package test.graph;
 
 import graph.Edge;
-import graph.Vertex;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 
 /**
  * Edge Tester.
@@ -16,22 +13,18 @@ import org.junit.After;
  */
 public class EdgeTest {
 
-  @Before
-  public void before() throws Exception {
-  }
-
-  @After
-  public void after() throws Exception {
-  }
-
   /**
-   * Method: getStart(); getEnd()
+   * Method: getBegin(); getEnd()
    */
   @Test
   public void testGetSetStartEnd() throws Exception {
     Edge e = new Edge(0, 1);
-    Assert.assertEquals(0, e.getStart());
+    Assert.assertEquals(0, e.getBegin());
     Assert.assertEquals(1, e.getEnd());
+    e.setBegin(1);
+    Assert.assertEquals(1, e.getBegin());
+    e.setEnd(0);
+    Assert.assertEquals(0, e.getEnd());
   }
 
   /**
@@ -42,6 +35,5 @@ public class EdgeTest {
     Edge e = new Edge(0, 1);
     Assert.assertEquals("(0,1)", e.toString());
   }
-
 
 } 
