@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 
-public abstract class Graph {
+public abstract class Graph implements Cloneable {
 
   private Map<Integer, Vertex> vertices;
 

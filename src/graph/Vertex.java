@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Collection;
 import java.util.Set;
 
-public class Vertex {
+public class Vertex implements Cloneable {
 
   private int id;
   private Map<Integer, Edge> adjEdges; //the Map is indexed with the edge's destination node id
@@ -15,6 +15,11 @@ public class Vertex {
     this.id = id;
     this.adjEdges = new HashMap<>();
   }
+
+  public int getId() {
+    return id;
+  }
+
 
   public Edge addEdge(Edge e) {
     int u = e.getBegin();
@@ -27,10 +32,6 @@ public class Vertex {
       return null; //return null if fail to add
     }
     return e;
-  }
-
-  public int getId() {
-    return id;
   }
 
   public Edge addNeighbor(int id) {
@@ -59,6 +60,15 @@ public class Vertex {
 
   public int getDegree() {
     return adjEdges.size();
+  }
+
+  @Override
+  public Object clone() {
+    Vertex v = new Vertex(this.getId());
+    for (Edge e : this.getEdges()) {
+      v.addEdge((Edge) e.clone());
+    }
+    return v;
   }
 
   @Override
