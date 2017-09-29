@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
+import util.GraphReader;
 
 /**
  * Traversal Tester.
@@ -27,19 +28,11 @@ public class TraversalTest {
   public void before() throws Exception {
     traversal = new Traversal();
 
-    g = new UndirectedGraph();
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(1, 3);
-    g.addEdge(1, 4);
-    g.addEdge(2, 4);
+    GraphReader reader = new GraphReader(",");
+    String testGraph = this.getClass().getClassLoader().getResource("test1").getPath();
 
-    dg = new DirectedGraph();
-    dg.addEdge(0, 1);
-    dg.addEdge(0, 2);
-    dg.addEdge(1, 3);
-    dg.addEdge(1, 4);
-    dg.addEdge(2, 4);
+    g = reader.readUndirectedGraph(testGraph);
+    dg = reader.readDirectedGraph(testGraph);
   }
 
   @After
