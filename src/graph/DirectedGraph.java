@@ -30,6 +30,7 @@ public class DirectedGraph extends Graph {
 
   @Override
   public Object clone() {
+    // make a deep copy of the graph by edges
     DirectedGraph g = new DirectedGraph();
     for (Edge e : this.getEdges()) {
       g.addEdge((Edge) e.clone());

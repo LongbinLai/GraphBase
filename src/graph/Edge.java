@@ -42,6 +42,7 @@ public class Edge implements Cloneable {
 
   @Override
   public Object clone() {
+    // make a deep copy of the Vertex object
     return new Edge(this.getBegin(), this.getEnd());
   }
 

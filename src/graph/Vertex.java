@@ -64,6 +64,7 @@ public class Vertex implements Cloneable {
 
   @Override
   public Object clone() {
+    // make a deep copy of the Vertex object
     Vertex v = new Vertex(this.getId());
     for (Edge e : this.getEdges()) {
       v.addEdge((Edge) e.clone());

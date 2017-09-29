@@ -32,6 +32,7 @@ public class UndirectedGraph extends Graph {
 
   @Override
   public Object clone() {
+    // make a deep copy of the graph by edges
     UndirectedGraph g = new UndirectedGraph();
     for (Edge e : this.getEdges()) {
       g.addEdge((Edge) e.clone());
