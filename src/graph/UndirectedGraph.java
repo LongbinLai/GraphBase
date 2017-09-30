@@ -42,11 +42,4 @@ public class UndirectedGraph extends Graph {
     return g;
   }
 
-  public DirectedGraph toDirected() {
-    DirectedGraph g = (DirectedGraph) this.clone();
-    for (Edge e : this.getEdges()) {
-      e.reverse();
-    }
-    return g;
-  }
 }

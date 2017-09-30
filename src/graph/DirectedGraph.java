@@ -37,11 +37,4 @@ public class DirectedGraph extends Graph {
     return g;
   }
 
-  public UndirectedGraph toUndirected() {
-    UndirectedGraph g = (UndirectedGraph) this.clone();
-    for (Edge e : this.getEdges()) {
-      e.reverse();
-    }
-    return g;
-  }
 }
