@@ -107,5 +107,30 @@ public class VertexTest {
     Assert.assertEquals(1, v.getDegree());
   }
 
+  @Test
+  public void testEqual() throws Exception {
+    Vertex v = new Vertex(0);
+    Assert.assertNotEquals(v, new Vertex(1));
+
+    Vertex v1 = new Vertex(0);
+    v.addNeighbor(1);
+    v1.addNeighbor(1);
+    v.addEdge(new Edge(2, 0));
+    v1.addEdge(new Edge(2, 0));
+    Assert.assertEquals(v, v1);
+
+    v.addNeighbor(3);
+    v1.addNeighbor(4);
+
+    Assert.assertNotEquals(v, v1);
+  }
+
+  @Test
+  public void testClone() throws Exception {
+    Vertex v = new Vertex(0);
+    v.addNeighbor(1);
+    v.addEdge(new Edge(2, 0));
+    Assert.assertEquals(v, v.clone());
+  }
 
 } 

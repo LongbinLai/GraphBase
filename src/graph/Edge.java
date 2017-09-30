@@ -41,6 +41,19 @@ public class Edge implements Cloneable {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Edge e = (Edge) o;
+    return (this.getBegin() == e.getBegin() && this.getEnd() == e.getEnd());
+  }
+
+  @Override
   public Object clone() {
     // make a deep copy of the Vertex object
     return new Edge(this.getBegin(), this.getEnd());

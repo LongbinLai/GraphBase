@@ -20,7 +20,6 @@ public class Vertex implements Cloneable {
     return id;
   }
 
-
   public Edge addEdge(Edge e) {
     int u = e.getBegin();
     int v = e.getEnd();
@@ -42,6 +41,25 @@ public class Vertex implements Cloneable {
     return this.adjEdges.containsKey(id);
   }
 
+  public boolean hasEdge(Edge e) {
+    int u = e.getBegin();
+    int v = e.getEnd();
+    int adj;
+    if (this.getId() == u) {
+      adj = v;
+    } else if (this.getId() == v) {
+      adj = u;
+    } else {
+      return false;
+    }
+
+    return (this.isAdjTo(adj) && this.getEdge(adj).equals(e));
+  }
+
+  public Edge getEdge(int id) {
+    return this.adjEdges.get(id);
+  }
+
   public Collection<Edge> getEdges() {
     return this.adjEdges.values();
   }
@@ -60,6 +78,35 @@ public class Vertex implements Cloneable {
 
   public int getDegree() {
     return adjEdges.size();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Vertex v = (Vertex) o;
+
+    if (id != v.id) {
+      return false;
+    }
+
+    if (v.getDegree() != this.getDegree()) {
+      return false;
+    }
+
+    Collection<Edge> edges = this.getEdges();
+    for (Edge e : edges) {
+      if (!v.hasEdge(e)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @Override

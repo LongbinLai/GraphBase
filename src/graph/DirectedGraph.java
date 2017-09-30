@@ -30,18 +30,17 @@ public class DirectedGraph extends Graph {
 
   @Override
   public Object clone() {
-    // make a deep copy of the graph by edges
     DirectedGraph g = new DirectedGraph();
-    for (Edge e : this.getEdges()) {
-      g.addEdge((Edge) e.clone());
+    for (Vertex v : this.getVertices()) {
+      g.addVertex((Vertex) v.clone());
     }
     return g;
   }
 
   public UndirectedGraph toUndirected() {
-    UndirectedGraph g = new UndirectedGraph();
+    UndirectedGraph g = (UndirectedGraph) this.clone();
     for (Edge e : this.getEdges()) {
-      g.addEdge(e);
+      e.reverse();
     }
     return g;
   }

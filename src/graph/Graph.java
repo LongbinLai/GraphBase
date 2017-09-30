@@ -68,6 +68,7 @@ public abstract class Graph implements Cloneable {
   }
 
   public boolean contains(int id) {
+    // test if the graph contains Vertex(id)
     return this.vertices.containsKey(id);
   }
 
@@ -84,6 +85,29 @@ public abstract class Graph implements Cloneable {
       v.removeNeighbors();
     }
     this.vertices.clear();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Graph g = (Graph) o;
+    if (g.getNumOfVertices() != this.getNumOfVertices()) {
+      return false;
+    }
+
+    for (Vertex u : this.getVertices()) {
+      if (!(g.contains(u.getId()) && g.getVertex(u.getId()).equals(u))) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
