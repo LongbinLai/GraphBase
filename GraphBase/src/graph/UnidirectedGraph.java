@@ -1,6 +1,7 @@
 package graph;
 import java.lang.Cloneable;
 import java.util.Collection;
+import java.util.concurrent.Callable;
 
 public class UnidirectedGraph extends Graph implements Cloneable{
 
@@ -61,14 +62,16 @@ public class UnidirectedGraph extends Graph implements Cloneable{
     return deleteEdge(edge.getFromId(), edge.getToId());
   }
 
+  @Override
   public UnidirectedGraph clone() {
     Collection<Edge> edgeCollection = getEdges();
+    Collection<Vertex> vertexCollection = verticesCollection();
     UnidirectedGraph newGraph = new UnidirectedGraph();
-    for (Integer vertexId : vertices.keySet()) {
-      newGraph.addVertex(vertexId);
+    for (Vertex vertex : vertexCollection) {
+      newGraph.addVertex(vertex.clone());
     }
     for (Edge edge : edgeCollection) {
-      newGraph.addEdge(edge.getFromId(),edge.getToId());
+      newGraph.addEdge(edge.clone());
     }
     return newGraph;
   }

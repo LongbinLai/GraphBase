@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-public class Vertex {
+public class Vertex implements Cloneable{
 
   private int vertexId;
   private Map<Integer, Edge> adjEdges;
@@ -45,5 +45,9 @@ public class Vertex {
   public boolean isAdjacent(int vertexId) {
     Integer id = new Integer(vertexId);
     return adjEdges.keySet().contains(id);
+  }
+
+  public Vertex clone() {
+    return new Vertex(vertexId);
   }
 }

@@ -1,6 +1,6 @@
 package graph;
 
-public class Edge {
+public class Edge implements Cloneable{
 
   private int fromId;
   private int toId;
@@ -16,6 +16,10 @@ public class Edge {
 
   public int getFromId() {
     return fromId;
+  }
+
+  public Edge clone(){
+    return new Edge(fromId,toId);
   }
 
 }

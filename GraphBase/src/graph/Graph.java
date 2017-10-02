@@ -53,6 +53,10 @@ public abstract class Graph {
     return vertices;
   }
 
+  public Collection verticesCollection() {
+    return vertices.values();
+  }
+
   public Collection<Edge> getEdges() {
     Set<Edge> edgeset = new HashSet();
     for(Integer vertexId : vertices.keySet()) {
