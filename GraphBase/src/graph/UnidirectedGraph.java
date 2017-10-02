@@ -64,14 +64,10 @@ public class UnidirectedGraph extends Graph implements Cloneable{
 
   @Override
   public UnidirectedGraph clone() {
-    Collection<Edge> edgeCollection = getEdges();
     Collection<Vertex> vertexCollection = verticesCollection();
     UnidirectedGraph newGraph = new UnidirectedGraph();
     for (Vertex vertex : vertexCollection) {
       newGraph.addVertex(vertex.clone());
-    }
-    for (Edge edge : edgeCollection) {
-      newGraph.addEdge(edge.clone());
     }
     return newGraph;
   }

@@ -64,14 +64,10 @@ public class DirectedGraph extends Graph implements Cloneable{
   }
 
   public DirectedGraph clone() {
-    Collection<Edge> edgeCollection = getEdges();
     Collection<Vertex> vertexCollection = verticesCollection();
     DirectedGraph newGraph = new DirectedGraph();
     for (Vertex vertex : vertexCollection) {
       newGraph.addVertex(vertex);
-    }
-    for (Edge edge : edgeCollection) {
-      newGraph.addEdge(edge);
     }
     return newGraph;
   }

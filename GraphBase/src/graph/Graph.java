@@ -70,14 +70,9 @@ public abstract class Graph {
     if (graph.vertices.size() != vertices.size() ) {
       return false;
     }
-    if (graph.getEdges().size() != getEdges().size()) {
-      return false;
-    }
-    for (Integer vertexId : vertices.keySet()) {
-      for (Integer edgeId : vertices.get(vertexId).getAdjEdges().keySet()) {
-        if (!graph.getVertices().get(vertexId).isAdjacent(edgeId)) {
-          return false;
-        }
+    for (Integer id : vertices.keySet()) {
+      if (!graph.getVertices().containsKey(id) || !vertices.get(id).isEqual(graph.getVertices().get(id))) {
+        return false;
       }
     }
     return true;

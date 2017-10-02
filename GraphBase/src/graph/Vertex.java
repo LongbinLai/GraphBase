@@ -47,7 +47,32 @@ public class Vertex implements Cloneable{
     return adjEdges.keySet().contains(id);
   }
 
+  public void setAdjEdges(Map<Integer, Edge> adjEdges) {
+    this.adjEdges = adjEdges;
+  }
+
   public Vertex clone() {
-    return new Vertex(vertexId);
+    Vertex cloneVertex = new Vertex(vertexId);
+    HashMap<Integer,Edge> newAdjEdges = new HashMap();
+    for (Integer edgeId : adjEdges.keySet()) {
+      newAdjEdges.put(edgeId,adjEdges.get(edgeId).clone());
+    }
+    cloneVertex.setAdjEdges(newAdjEdges);
+    return cloneVertex;
+  }
+
+  boolean isEqual(Vertex vertex) {
+    if (vertexId != vertex.getId()) {
+      return false;
+    }
+    if (adjEdges.size() != vertex.getAdjEdges().size()) {
+      return false;
+    }
+    for (Integer id : adjEdges.keySet()) {
+      if (!vertex.getAdjEdges().keySet().contains(id)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
