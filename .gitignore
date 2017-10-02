@@ -23,6 +23,9 @@
 # IML Files #
 *.iml
 
+#TestGraphs#
+*.graph
+
 #Dir
 /out
 /lib
