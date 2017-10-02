@@ -1,6 +1,8 @@
 package graph;
+import java.lang.Cloneable;
+import java.util.Collection;
 
-public class UnidirectedGraph extends Graph {
+public class UnidirectedGraph extends Graph implements Cloneable{
 
   public Vertex deleteVertex(int vertexIndex) {
 
@@ -18,15 +20,8 @@ public class UnidirectedGraph extends Graph {
   }
 
   public boolean addEdge(int fromId, int toId) {
-    this.addVertex(fromId);
-    this.addVertex(toId);
-    if (vertices.get(fromId).isAdjacent(toId)) {
-      return false;//represents the edge has already existed.
-    }
     Edge newEdge = new Edge(fromId, toId);
-    vertices.get(fromId).addFromAdjEdge(newEdge);
-    vertices.get(toId).addToAdjEdge(newEdge);
-    return true; // normal return
+    return addEdge(newEdge);
   }
 
   public boolean addEdge(Vertex fromVertex, Vertex toVertex) {
@@ -34,7 +29,23 @@ public class UnidirectedGraph extends Graph {
   }
 
   public boolean addEdge(Edge edge) {
-    return addEdge(edge.getFromId(), edge.getToId());
+    addVertex(edge.getFromId());
+    addVertex(edge.getToId());
+    if (vertices.get(edge.getFromId()).isAdjacent(edge.getToId())) {
+      return false;//represents the edge has already existed.
+    }
+    vertices.get(edge.getFromId()).addFromAdjEdge(edge);
+    vertices.get(edge.getToId()).addToAdjEdge(edge);
+    return true;
+  }
+
+  public boolean addEdge(Collection<Edge> edgeCollection) {
+    for (Edge edge : edgeCollection) {
+      if (!addEdge(edge)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public Edge deleteEdge(int fromId, int toId) {
@@ -48,5 +59,17 @@ public class UnidirectedGraph extends Graph {
 
   public Edge deleteEdge(Edge edge) {
     return deleteEdge(edge.getFromId(), edge.getToId());
+  }
+
+  public UnidirectedGraph clone() {
+    Collection<Edge> edgeCollection = getEdges();
+    UnidirectedGraph newGraph = new UnidirectedGraph();
+    for (Integer vertexId : vertices.keySet()) {
+      newGraph.addVertex(vertexId);
+    }
+    for (Edge edge : edgeCollection) {
+      newGraph.addEdge(edge.getFromId(),edge.getToId());
+    }
+    return newGraph;
   }
 }

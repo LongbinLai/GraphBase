@@ -55,5 +55,36 @@ public class DirectedGraphTest {
     assertEquals(dGraph.getVertices().get(1).isAdjacent(2), false);
   }
 
+  @Test
+  public void testIsEqual() throws Exception {
+    DirectedGraph graph1 = new DirectedGraph();
+    graph1.addVertex(1);
+    graph1.addVertex(2);
+    graph1.addVertex(3);
+    DirectedGraph graph2 = new DirectedGraph();
+    graph2.addVertex(1);
+    graph2.addVertex(2);
+    graph2.addVertex(3);
+    graph1.addEdge(1,2);
+    graph1.addEdge(2,3);
+    graph2.addEdge(1,2);
+    graph2.addEdge(2,3);
+    assertEquals(graph1.isEqual(graph2),true);
+    assertEquals(graph2.isEqual(graph1),true);
+  }
+
+
+  @Test
+  public void testClone() throws Exception {
+    DirectedGraph graph = new DirectedGraph();
+    graph.addVertex(1);
+    graph.addVertex(2);
+    graph.addVertex(3);
+    graph.addEdge(1,2);
+    graph.addEdge(2,3);
+    DirectedGraph graphCopy = graph.clone();
+    assertEquals(graph.isEqual(graphCopy),true);
+  }
+
 
 } 
