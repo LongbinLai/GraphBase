@@ -60,6 +60,7 @@ public class DirectedGraph extends Graph implements Cloneable {
     return deleteEdge(edge.getFrom(), edge.getTo());
   }
 
+  @Override
   public DirectedGraph clone() {
     Collection<Vertex> vertexCollection = getVertices();
     DirectedGraph newGraph = new DirectedGraph();

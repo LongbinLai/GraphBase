@@ -61,10 +61,6 @@ public abstract class Graph {
     return vertices.values();
   }
 
-  public Collection vertexCollection() {
-    return vertices.values();
-  }
-
   public Collection<Edge> getEdges() {
     Set<Edge> edgeset = new HashSet();
     vertices.values().forEach(v -> v.getAdjEdges().forEach(e -> edgeset.add(e)));
@@ -79,7 +75,7 @@ public abstract class Graph {
     }
     Collection<Vertex> vertexCollection = graph.getVertices();
     for (Vertex v : vertexCollection) {
-      if (!vertices.containsKey(v.getId())) {
+      if (!contains(v.getId())) {
         return false;
       }
       if (!v.equals(vertices.get(v.getId()))) {
