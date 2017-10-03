@@ -128,6 +128,8 @@ public class UndirectedGraphTest {
     graph1.deleteEdge(1,2);
     assertEquals(graph1.equals(graph2),false);
     assertEquals(graph2.equals(graph1),false);
+    graph2.deleteEdge(1,2);
+    assertEquals(graph1.equals(graph2),true);
   }
 
   @Test
