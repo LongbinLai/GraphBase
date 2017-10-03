@@ -32,9 +32,9 @@ public class DirectedGraphTest {
     dGraph.addVertex(2);
     dGraph.addVertex(3);
     dGraph.addEdge(1, 2);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(2), true);
-    assertEquals(dGraph.getVertices().get(2).isAdjacent(1), false);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(3), false);
+    assertEquals(dGraph.getVertex(1).isAdjacent(2), true);
+    assertEquals(dGraph.getVertex(2).isAdjacent(1), false);
+    assertEquals(dGraph.getVertex(1).isAdjacent(3), false);
   }
 
   @Test
@@ -46,13 +46,13 @@ public class DirectedGraphTest {
     dGraph.addVertex(3);
     dGraph.addEdge(1, 2);
     dGraph.addEdge(2, 3);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(2), true);
-    assertEquals(dGraph.getVertices().get(2).isAdjacent(1), false);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(3), false);
+    assertEquals(dGraph.getVertex(1).isAdjacent(2), true);
+    assertEquals(dGraph.getVertex(2).isAdjacent(1), false);
+    assertEquals(dGraph.getVertex(1).isAdjacent(3), false);
     dGraph.deleteEdge(2, 1);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(2), true);
+    assertEquals(dGraph.getVertex(1).isAdjacent(2), true);
     dGraph.deleteEdge(1, 2);
-    assertEquals(dGraph.getVertices().get(1).isAdjacent(2), false);
+    assertEquals(dGraph.getVertex(1).isAdjacent(2), false);
   }
 
   @Test
@@ -69,8 +69,8 @@ public class DirectedGraphTest {
     graph1.addEdge(2,3);
     graph2.addEdge(1,2);
     graph2.addEdge(2,3);
-    assertEquals(graph1.isEqual(graph2),true);
-    assertEquals(graph2.isEqual(graph1),true);
+    assertEquals(graph1.equals(graph2),true);
+    assertEquals(graph2.equals(graph1),true);
   }
 
 
@@ -83,7 +83,7 @@ public class DirectedGraphTest {
     graph.addEdge(1,2);
     graph.addEdge(2,3);
     DirectedGraph graphCopy = graph.clone();
-    assertEquals(graph.isEqual(graphCopy),true);
+    assertEquals(graph.equals(graphCopy),true);
   }
 
 

@@ -1,18 +1,15 @@
 package graph;
+
 import java.lang.Cloneable;
 import java.util.Collection;
-import java.util.concurrent.Callable;
 
-public class UnidirectedGraph extends Graph implements Cloneable{
+public class UndirectedGraph extends Graph implements Cloneable {
 
   public Vertex deleteVertex(int vertexIndex) {
-
     if (!vertices.containsKey(vertexIndex)) {
       return null;
     }
-    for (Integer key : vertices.get(vertexIndex).getAdjEdges().keySet()) {
-      this.deleteEdge(vertices.get(vertexIndex).getAdjEdges().get(key));
-    }
+    vertices.get(vertexIndex).getAdjEdges().forEach(e -> deleteEdge(e));
     return vertices.remove(vertexIndex);
   }
 
@@ -30,13 +27,13 @@ public class UnidirectedGraph extends Graph implements Cloneable{
   }
 
   public boolean addEdge(Edge edge) {
-    addVertex(edge.getFromId());
-    addVertex(edge.getToId());
-    if (vertices.get(edge.getFromId()).isAdjacent(edge.getToId())) {
-      return false;//represents the edge has already existed.
+    addVertex(edge.getFrom());
+    addVertex(edge.getTo());
+    if (vertices.get(edge.getFrom()).isAdjacent(edge.getTo())) {
+      return false;
     }
-    vertices.get(edge.getFromId()).addFromAdjEdge(edge);
-    vertices.get(edge.getToId()).addToAdjEdge(edge);
+    vertices.get(edge.getFrom()).addFromAdjEdge(edge);
+    vertices.get(edge.getTo()).addToAdjEdge(edge);
     return true;
   }
 
@@ -59,16 +56,16 @@ public class UnidirectedGraph extends Graph implements Cloneable{
   }
 
   public Edge deleteEdge(Edge edge) {
-    return deleteEdge(edge.getFromId(), edge.getToId());
+    return deleteEdge(edge.getFrom(), edge.getTo());
   }
 
   @Override
-  public UnidirectedGraph clone() {
-    Collection<Vertex> vertexCollection = verticesCollection();
-    UnidirectedGraph newGraph = new UnidirectedGraph();
-    for (Vertex vertex : vertexCollection) {
-      newGraph.addVertex(vertex.clone());
-    }
+  public UndirectedGraph clone() {
+    Collection<Vertex> vertexCollection = getVertices();
+    Collection<Edge> edgeCollection = getEdges();
+    UndirectedGraph newGraph = new UndirectedGraph();
+    vertexCollection.forEach(v -> newGraph.addVertex(v.getId()));
+    edgeCollection.forEach(e -> newGraph.addEdge(e.clone()));
     return newGraph;
   }
 }

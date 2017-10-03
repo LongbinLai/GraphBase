@@ -4,70 +4,69 @@ import graph.Graph;
 import graph.Vertex;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
 
 public class Traversal {
 
-  public ArrayList<Integer> BFS(Graph graph, Integer entryId) {
-    Set<Integer> visitMark = new HashSet<Integer>();
-    Queue<Integer> visitQueue = new LinkedList<Integer>();
-    Map<Integer, Vertex> vertices = graph.getVertices();
-    ArrayList<Integer> visitOrder = new ArrayList<>();
-    if (!vertices.containsKey(entryId)) {
+  public List<Integer> BFS(Graph graph, Integer entryId) {
+    Set<Integer> visited = new HashSet<Integer>();
+    Queue<Integer> queue = new LinkedList<Integer>();
+    List<Integer> order = new ArrayList<>();
+    if (!graph.contains(entryId)) {
       throw new NoSuchElementException("The entry vertex is not existed");
     }
-    visitQueue.add(entryId);
-    while (!visitQueue.isEmpty()) {
-      Integer vertexId = visitQueue.poll();
-      visitMark.add(vertexId);
-      visitOrder.add(vertexId);
-      for (Object key : vertices.get(vertexId).getAdjEdges().keySet()) {
-        Integer adjId = Integer.parseInt(key.toString());
-        if (!visitMark.contains(adjId)) {
-          visitMark.add(adjId);
-          visitQueue.add(adjId);
+    queue.add(entryId);
+    while (!queue.isEmpty()) {
+      Integer vertexId = queue.poll();
+      visited.add(vertexId);
+      order.add(vertexId);
+      Collection<Integer> adjEdges = graph.getVertex(vertexId).getNeighbors();
+      for (int id : adjEdges) {
+        if (!visited.contains(id)) {
+          visited.add(id);
+          queue.add(id);
         }
       }
     }
-    return visitOrder;
+    return order;
   }
 
-  public ArrayList<Integer> BFS(Graph graph, Vertex entryVertex) {
+  public List<Integer> BFS(Graph graph, Vertex entryVertex) {
     return BFS(graph, entryVertex.getId());
   }
 
-  public ArrayList DFS(Graph graph, Integer entryId) {
-    Set<Integer> visitMark = new HashSet<Integer>();
-    Stack<Integer> visitStack = new Stack<>();
-    Map<Integer, Vertex> vertices = graph.getVertices();
-    ArrayList<Integer> visitOrder = new ArrayList<>();
-    if (!vertices.keySet().contains(entryId)) {
+  public List DFS(Graph graph, Integer entryId) {
+    Set<Integer> visited = new HashSet<Integer>();
+    Stack<Integer> stack = new Stack<>();
+    List<Integer> order = new ArrayList<>();
+    if (!graph.contains(entryId)) {
       throw new NoSuchElementException("The entry vertex is not existed");
     }
-    visitStack.push(entryId);
-    while (!visitStack.empty()) {
-      Integer vertexId = visitStack.pop();
-      visitMark.add(vertexId);
-      visitOrder.add(vertexId);
-      for (Object key : vertices.get(vertexId).getAdjEdges().keySet()) {
-        Integer id = Integer.parseInt(key.toString());
-        if (!visitMark.contains(id)) {
-          if (!visitStack.contains(id)) {
-            visitStack.push(id);
+    stack.push(entryId);
+    while (!stack.empty()) {
+      int vertexId = stack.pop();
+      visited.add(vertexId);
+      order.add(vertexId);
+      Collection<Integer> neighbors = graph.getVertex(vertexId).getNeighbors();
+      for (int id : neighbors) {
+        if (!visited.contains(id)) {
+          if (!stack.contains(id)) {
+            stack.push(id);
           }
         }
       }
     }
-    return visitOrder;
+    return order;
   }
 
-  public ArrayList DFS(Graph graph, Vertex entryVertex) {
+  public List DFS(Graph graph, Vertex entryVertex) {
     return DFS(graph, entryVertex.getId());
   }
 }

@@ -35,7 +35,7 @@ public class VertexTest {
     Vertex vertexTwo = new Vertex(2);
     Edge edge = new Edge(1, 2);
     vertexOne.addFromAdjEdge(edge);
-    assertEquals(vertexOne.getAdjEdges().get(2).equals(edge), true);
+    assertEquals(vertexOne.getAdjEdge(2).equals(edge), true);
   }
 
   /**
@@ -50,8 +50,8 @@ public class VertexTest {
     Edge dedge = new Edge(2, 1);
     vertexOne.addFromAdjEdge(edge);
     vertexTwo.addFromAdjEdge(dedge);
-    assertEquals(vertexOne.getAdjEdges().get(2).equals(edge), true);
-    assertEquals(vertexTwo.getAdjEdges().get(1).equals(dedge), true);
+    assertEquals(vertexOne.getAdjEdge(2).equals(edge), true);
+    assertEquals(vertexTwo.getAdjEdge(1).equals(dedge), true);
     vertexOne.deleteAdjEdge(2);
     assertEquals(vertexOne.getAdjEdges().size(), 0);
   }

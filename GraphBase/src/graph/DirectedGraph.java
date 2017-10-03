@@ -3,24 +3,22 @@ package graph;
 import java.util.Collection;
 import java.lang.Cloneable;
 
-public class DirectedGraph extends Graph implements Cloneable{
+public class DirectedGraph extends Graph implements Cloneable {
 
-  public Vertex deleteVertex(int vertexIndex) {
-    Vertex deletedVertex = vertices.remove(vertexIndex);
+  public Vertex deleteVertex(int vertexId) {
+    Vertex deletedVertex = vertices.remove(vertexId);
     if (deletedVertex != null) {
-      for (Integer key : vertices.keySet()) {
-        vertices.get(key).deleteAdjEdge(vertexIndex);
-      }
+      vertices.values().forEach(v -> v.deleteAdjEdge(vertexId));
     }
     return deletedVertex;
   }
 
-  public Vertex deleteVertex(Vertex vertex)  {
+  public Vertex deleteVertex(Vertex vertex) {
     return deleteVertex(vertex.getId());
   }
 
   public boolean addEdge(int fromId, int toId) {
-    Edge newEdge = new Edge(fromId,toId);
+    Edge newEdge = new Edge(fromId, toId);
     return addEdge(newEdge);
   }
 
@@ -29,13 +27,12 @@ public class DirectedGraph extends Graph implements Cloneable{
   }
 
   public boolean addEdge(Edge edge) {
-    //return addEdge(edge.getFromId(), edge.getToId());
-    int fromId = edge.getFromId();
-    int toId = edge.getToId();
+    int fromId = edge.getFrom();
+    int toId = edge.getTo();
     addVertex(fromId);
     addVertex(toId);
     if (this.vertices.get(fromId).isAdjacent(toId)) {
-      return false;// 0 represents the edge is not existed , otherwise return 1;
+      return false;
     }
     this.vertices.get(fromId).addFromAdjEdge(edge);
     return true;
@@ -44,7 +41,7 @@ public class DirectedGraph extends Graph implements Cloneable{
 
   public boolean addEdge(Collection<Edge> edgeCollection) {
     for (Edge edge : edgeCollection) {
-      if ( !addEdge(edge) ) {
+      if (!addEdge(edge)) {
         return false;
       }
     }
@@ -60,15 +57,13 @@ public class DirectedGraph extends Graph implements Cloneable{
   }
 
   public Edge deleteEdge(Edge edge) {
-    return deleteEdge(edge.getFromId(), edge.getToId());
+    return deleteEdge(edge.getFrom(), edge.getTo());
   }
 
   public DirectedGraph clone() {
-    Collection<Vertex> vertexCollection = verticesCollection();
+    Collection<Vertex> vertexCollection = getVertices();
     DirectedGraph newGraph = new DirectedGraph();
-    for (Vertex vertex : vertexCollection) {
-      newGraph.addVertex(vertex);
-    }
+    vertexCollection.forEach(vertex -> newGraph.addVertex(vertex.clone()));
     return newGraph;
   }
 

@@ -49,29 +49,40 @@ public abstract class Graph {
 
   public abstract Edge deleteEdge(Edge edge);
 
-  public Map<Integer, Vertex> getVertices() {
-    return vertices;
+  public boolean contains(int id) {
+    return vertices.containsKey(id);
   }
 
-  public Collection verticesCollection() {
+  public Vertex getVertex(int id) {
+    return vertices.get(id);
+  }
+
+  public Collection<Vertex> getVertices() {
+    return vertices.values();
+  }
+
+  public Collection vertexCollection() {
     return vertices.values();
   }
 
   public Collection<Edge> getEdges() {
     Set<Edge> edgeset = new HashSet();
-    for(Integer vertexId : vertices.keySet()) {
-      for (Integer edgeId: vertices.get(vertexId).getAdjEdges().keySet())
-        edgeset.add(vertices.get(vertexId).getAdjEdges().get(edgeId));
-    }
+    vertices.values().forEach(v -> v.getAdjEdges().forEach(e -> edgeset.add(e)));
     return edgeset;
   }
 
-  public boolean isEqual(Graph graph) {
-    if (graph.vertices.size() != vertices.size() ) {
+  @Override
+  public boolean equals(Object obj) {
+    Graph graph = (Graph) obj;
+    if (graph.vertices.size() != vertices.size()) {
       return false;
     }
-    for (Integer id : vertices.keySet()) {
-      if (!graph.getVertices().containsKey(id) || !vertices.get(id).isEqual(graph.getVertices().get(id))) {
+    Collection<Vertex> vertexCollection = graph.getVertices();
+    for (Vertex v : vertexCollection) {
+      if (!vertices.containsKey(v.getId())) {
+        return false;
+      }
+      if (!v.equals(vertices.get(v.getId()))) {
         return false;
       }
     }
