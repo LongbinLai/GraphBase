@@ -13,43 +13,6 @@ import java.util.HashSet;
 
 public class ReaderWriter {
 
-  public Collection<Edge> read(String fileName) throws IOException {
-    Collection<Edge> edges = new HashSet<>();
-    File file = new File(fileName);
-    BufferedReader reader = null;
-    try {
-      reader = new BufferedReader(new FileReader(file));
-      String edgeInfo = null;
-      int fromId = 0;
-      int toId = 0;
-      while ((edgeInfo = reader.readLine()) != null) {
-        if (edgeInfo.charAt(0) == '#' || edgeInfo.isEmpty()) {
-          continue;
-        }
-        int split = 0;
-        for (split = 0; split < edgeInfo.length(); split++) {
-          if (edgeInfo.charAt(split) == ',') {
-            break;
-          }
-        }
-        fromId = Integer.parseInt(edgeInfo.substring(0, split));
-        toId = Integer.parseInt(edgeInfo.substring(split + 1));
-        Edge edge = new Edge(fromId, toId);
-        edges.add(edge);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException e1) {
-        }
-      }
-    }
-    return edges;
-  }
-
   public Graph readUndirectedGraph(String fileName) {
     Graph graph = new UndirectedGraph();
     File file = new File(fileName);

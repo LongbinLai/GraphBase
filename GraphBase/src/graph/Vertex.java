@@ -63,8 +63,7 @@ public class Vertex implements Cloneable {
   public Vertex clone() {
     Vertex cloneVertex = new Vertex(vertexId);
     HashMap<Integer, Edge> newAdjEdges = new HashMap();
-    adjEdges.values()
-        .forEach(e -> newAdjEdges.put(e.getFrom() != vertexId ? e.getFrom() : e.getTo(), e));
+    adjEdges.keySet().forEach(key -> newAdjEdges.put(key,adjEdges.get(key).clone()));
     cloneVertex.setAdjEdges(newAdjEdges);
     return cloneVertex;
   }
