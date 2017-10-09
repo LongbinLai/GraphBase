@@ -45,7 +45,7 @@ public class Edge implements Cloneable {
     if (this == o) {
       return true;
     }
-    if (o == null || this.getClass() != o.getClass()) {
+    if (!(o instanceof Edge)) {
       return false;
     }
 
@@ -55,7 +55,7 @@ public class Edge implements Cloneable {
 
   @Override
   public Object clone() {
-    // make a deep copy of the Vertex object
+    // make a deep copy of the Edge object
     return new Edge(this.getBegin(), this.getEnd());
   }
 

@@ -52,18 +52,12 @@ public abstract class Graph implements Cloneable {
   }
 
   public void removeEdges() {
-    for (Edge e : this.getEdges()) {
-      this.removeEdge(e);
-    }
+    this.getEdges().forEach(e -> this.removeEdge(e));
   }
 
   public Collection<Edge> getEdges() {
     Set<Edge> edges = new HashSet<>();
-    for (Vertex v : this.getVertices()) {
-      for (Edge edge : v.getEdges()) {
-        edges.add(edge);
-      }
-    }
+    this.getVertices().forEach(v -> v.getEdges().forEach(e -> edges.add(e)));
     return edges;
   }
 
@@ -81,9 +75,7 @@ public abstract class Graph implements Cloneable {
   }
 
   public void clear() {
-    for (Vertex v : this.getVertices()) {
-      v.removeNeighbors();
-    }
+    this.getVertices().forEach(v -> v.removeNeighbors());
     this.vertices.clear();
   }
 
@@ -101,7 +93,8 @@ public abstract class Graph implements Cloneable {
       return false;
     }
 
-    for (Vertex u : this.getVertices()) {
+    Collection<Vertex> vertices = this.getVertices();
+    for (Vertex u : vertices) {
       if (!(g.contains(u.getId()) && g.getVertex(u.getId()).equals(u))) {
         return false;
       }
@@ -113,14 +106,12 @@ public abstract class Graph implements Cloneable {
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
-    result.append("Graph: \n");
+    result.append("(").append(this.getClass().getSimpleName()).append(")");
 
     if (isEmpty()) {
-      result.append("  Empty graph");
+      result.append(" Empty graph");
     } else {
-      for (Vertex v : this.getVertices()) {
-        result.append(v.toString());
-      }
+      this.getVertices().forEach(v -> result.append("|").append(v));
     }
     return result.toString();
   }

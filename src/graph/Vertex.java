@@ -85,7 +85,7 @@ public class Vertex implements Cloneable {
     if (this == o) {
       return true;
     }
-    if (o == null || this.getClass() != o.getClass()) {
+    if (!(o instanceof Vertex)) {
       return false;
     }
 
@@ -113,24 +113,21 @@ public class Vertex implements Cloneable {
   public Object clone() {
     // make a deep copy of the Vertex object
     Vertex v = new Vertex(this.getId());
-    for (Edge e : this.getEdges()) {
-      v.addEdge((Edge) e.clone());
-    }
+    this.getEdges().forEach(e -> v.addEdge((Edge) e.clone()));
     return v;
   }
 
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
-    result.append("Node: ");
-    result.append(this.getId());
-    result.append("\n  - Neighbors: ");
+    result.append("Vertex ").append(this.getId()).append(": ");
 
-    for (int v : this.getNeighbors()) {
-      result.append(v);
-      result.append(", ");
+    if (this.getDegree() == 0) {
+      result.append("No edges ");
+    } else {
+      this.adjEdges.forEach((k, v) -> result.append(k + ">" + v + "; "));
     }
-    result.append("\n");
+
     return result.toString();
   }
 }

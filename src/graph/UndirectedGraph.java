@@ -6,9 +6,7 @@ public class UndirectedGraph extends Graph {
   public Vertex removeVertex(int id) {
     Vertex v = super.removeVertex(id);
     if (v != null) {
-      for (int adjId : v.getNeighbors()) {
-        this.getVertex(adjId).removeNeighbor(id);
-      }
+      v.getNeighbors().forEach(adjId -> this.getVertex(adjId).removeNeighbor(id));
     }
     return v;
   }
@@ -33,12 +31,10 @@ public class UndirectedGraph extends Graph {
   @Override
   public Object clone() {
     UndirectedGraph g = new UndirectedGraph();
-    for (Vertex v : this.getVertices()) {
-      g.addVertex(new Vertex(v.getId()));
-    }
-    for (Edge e : this.getEdges()) {
-      g.addEdge((Edge) e.clone());
-    }
+
+    this.getVertices().forEach(v -> g.addVertex(new Vertex(v.getId())));
+    this.getEdges().forEach(e -> g.addEdge((Edge) e.clone()));
+
     return g;
   }
 
