@@ -30,14 +30,14 @@ public class GraphReaderTest {
   }
 
   /**
-   * Method: getSep()
+   * Method: getSplitter()
    */
   @Test
   public void testGetSetSep() throws Exception {
     GraphReader reader = new GraphReader(",");
-    Assert.assertEquals(reader.getSep(), ",");
-    reader.setSep(" ");
-    Assert.assertEquals(reader.getSep(), " ");
+    Assert.assertEquals(reader.getSplitter(), ",");
+    reader.setSplitter(" ");
+    Assert.assertEquals(reader.getSplitter(), " ");
   }
 
   /**

@@ -3,6 +3,7 @@ package util;
 import graph.DirectedGraph;
 import graph.Edge;
 import graph.UndirectedGraph;
+import java.util.IllegalFormatException;
 import java.util.LinkedList;
 import java.util.List;
 import java.io.BufferedReader;
@@ -11,18 +12,18 @@ import java.io.IOException;
 
 public class GraphReader {
 
-  private String sep;  // edges format "src sep dst"
+  private String splitter;  // edges format "src splitter dst"
 
-  public GraphReader(String sep) {
-    this.sep = sep;
+  public GraphReader(String splitter) {
+    this.splitter = splitter;
   }
 
-  public String getSep() {
-    return sep;
+  public String getSplitter() {
+    return splitter;
   }
 
-  public void setSep(String sep) {
-    this.sep = sep;
+  public void setSplitter(String splitter) {
+    this.splitter = splitter;
   }
 
   public DirectedGraph readDirectedGraph(String filename) {
@@ -41,16 +42,25 @@ public class GraphReader {
     return g;
   }
 
-  private List<Edge> readEdges(String filename) {
+  private List<Edge> readEdges(String filename) throws IllegalArgumentException {
     List<Edge> edges = new LinkedList<>();
     try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
       String line;
       while ((line = br.readLine()) != null) {
         if (!line.startsWith("#")) {
-          String[] parts = line.split(this.getSep(), 2);
-          int begin = Integer.parseInt(parts[0]);
-          int end = Integer.parseInt(parts[1]);
-          edges.add(new Edge(begin, end));
+          String[] parts = line.split(this.getSplitter());
+
+          if (parts.length != 2) {
+            throw new IllegalArgumentException("Incorrect format for " + line);
+          }
+
+          try {
+            int begin = Integer.parseInt(parts[0]);
+            int end = Integer.parseInt(parts[1]);
+            edges.add(new Edge(begin, end));
+          } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Incorrect format for " + line);
+          }
         }
       }
     } catch (IOException e) {
