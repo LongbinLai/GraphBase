@@ -23,6 +23,10 @@ public abstract class Graph implements Cloneable {
     return vertices.values();
   }
 
+  public Collection<Integer> getVertexIDs() {
+    return new HashSet<>(vertices.keySet()); // return a copy of the keys
+  }
+
   public Vertex addVertex(Vertex v) {
     if (this.contains(v.getId())) {
       return this.getVertex(v.getId()); // return the existing vertex if the id already exists

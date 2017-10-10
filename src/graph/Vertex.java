@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Vertex implements Cloneable {
 
-  private int id;
+  private final int id;
   private Map<Integer, Edge> adjEdges; //the Map is indexed with the edge's destination node id
 
 
