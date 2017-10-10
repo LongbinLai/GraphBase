@@ -28,6 +28,24 @@ public class EdgeTest {
   }
 
   /**
+   * Method: equals()
+   */
+  @Test
+  public void testEquals() throws Exception {
+    Assert.assertEquals(new Edge(0, 1), new Edge(0, 1));
+    Assert.assertNotEquals(new Edge(0, 1), new Edge(1, 2));
+  }
+
+  /**
+   * Method: clone()
+   */
+  @Test
+  public void testClone() throws Exception {
+    Edge e = new Edge(0, 1);
+    Assert.assertEquals(e, e.clone());
+  }
+
+  /**
    * Method: toString()
    */
   @Test
