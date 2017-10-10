@@ -27,7 +27,7 @@ public class Vertex implements Cloneable {
     return adjEdges.values();
   }
 
-  public Collection<Integer> getNeighbors() {
+  public Collection<Integer> neighbors() {
     return adjEdges.keySet();
   }
 
@@ -74,7 +74,7 @@ public class Vertex implements Cloneable {
     if (vertexId != vertex.getId()) {
       return false;
     }
-    Collection<Integer> neighborIds = vertex.getNeighbors();
+    Collection<Integer> neighborIds = vertex.neighbors();
     if (adjEdges.size() != neighborIds.size()) {
       return false;
     }

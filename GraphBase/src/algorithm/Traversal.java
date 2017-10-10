@@ -4,7 +4,7 @@ import graph.Graph;
 import graph.Vertex;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.HashSet;
@@ -23,17 +23,26 @@ public class Traversal {
       throw new NoSuchElementException("The entry vertex is not existed");
     }
     queue.add(entryId);
-    while (!queue.isEmpty()) {
+    int graphSize = graph.size();
+    while (visited.size() < graphSize) {
+      if (queue.isEmpty()) {
+        HashMap<Integer,Vertex> map = graph.getVerticesMap();
+        for (int id : map.keySet()) {
+          if (!visited.contains(id)) {
+            queue.addAll(graph.getVertex(id).neighbors());
+            visited.add(id);
+            order.add(id);
+            break;
+          }
+        }
+      }
       Integer vertexId = queue.poll();
       visited.add(vertexId);
       order.add(vertexId);
-      Collection<Integer> adjEdges = graph.getVertex(vertexId).getNeighbors();
-      for (int id : adjEdges) {
-        if (!visited.contains(id)) {
-          visited.add(id);
+      graph.getVertex(vertexId).neighbors().forEach(id -> {
+        if (!visited.contains(id) && !queue.contains(id))
           queue.add(id);
-        }
-      }
+      });
     }
     return order;
   }
@@ -50,18 +59,26 @@ public class Traversal {
       throw new NoSuchElementException("The entry vertex is not existed");
     }
     stack.push(entryId);
-    while (!stack.empty()) {
-      int vertexId = stack.pop();
-      visited.add(vertexId);
-      order.add(vertexId);
-      Collection<Integer> neighbors = graph.getVertex(vertexId).getNeighbors();
-      for (int id : neighbors) {
-        if (!visited.contains(id)) {
-          if (!stack.contains(id)) {
-            stack.push(id);
+    int graphSize = graph.size();
+    while (visited.size() < graphSize) {
+      if (stack.isEmpty()) {
+        HashMap<Integer,Vertex> map = graph.getVerticesMap();
+        for (int id : map.keySet()) {
+          if (!visited.contains(id)) {
+            stack.addAll(graph.getVertex(id).neighbors());
+            visited.add(id);
+            order.add(id);
+            break;
           }
         }
       }
+      int vertexId = stack.pop();
+      visited.add(vertexId);
+      order.add(vertexId);
+      graph.getVertex(vertexId).neighbors().forEach(id -> {
+        if (!visited.contains(id) && !stack.contains(id))
+          stack.push(id);
+      });
     }
     return order;
   }

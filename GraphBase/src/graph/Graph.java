@@ -2,13 +2,12 @@ package graph;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
 public abstract class Graph {
 
-  protected Map<Integer, Vertex> vertices;
+  protected HashMap<Integer, Vertex> vertices;
 
   public Graph() {
     this.vertices = new HashMap<Integer, Vertex>();
@@ -61,10 +60,38 @@ public abstract class Graph {
     return vertices.values();
   }
 
+  public HashMap<Integer, Vertex> getVerticesMap() {
+    return vertices;
+  }
+
   public Collection<Edge> getEdges() {
     Set<Edge> edgeset = new HashSet();
     vertices.values().forEach(v -> v.getAdjEdges().forEach(e -> edgeset.add(e)));
     return edgeset;
+  }
+
+  public int size() {
+    return vertices.size();
+  }
+
+  public Set keySet() {
+    return vertices.keySet();
+  }
+
+  public BfsIterator bfsIterator() {
+    return new BfsIterator(this);
+  }
+
+  public BfsIterator bfsIterator(int id) {
+    return new BfsIterator(this,id);
+  }
+
+  public DfsIterator dfsIterator() {
+    return new DfsIterator(this);
+  }
+
+  public DfsIterator dfsIterator(int id) {
+    return new DfsIterator(this,id);
   }
 
   @Override
