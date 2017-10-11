@@ -15,7 +15,6 @@ public class TraversalIterator implements Iterator<Integer> {
   private Collection<Integer> unvisited;
   private Collection<Integer> queue;
   private boolean isBFS;
-  private int count;
 
   public TraversalIterator(Graph graph, int start, String method) {
 
@@ -37,11 +36,10 @@ public class TraversalIterator implements Iterator<Integer> {
     this.start = start;
     this.unvisited = graph.getVertexIDs();
     this.isBFS = isBFS;
-    this.count = 0;
 
     if (isBFS) {
       this.queue = new LinkedList<>();
-      add(start);
+      offer(start);
     } else {
       this.queue = new Stack<>();
       push(start);
@@ -61,9 +59,12 @@ public class TraversalIterator implements Iterator<Integer> {
   @Override
   public Integer next() {
     if (queue.isEmpty()) {
+      if (this.unvisited.isEmpty()) {
+        throw new NoSuchElementException();
+      }
       int newStart = this.unvisited.iterator().next();
       if (isBFS) {
-        add(newStart);
+        offer(newStart);
       } else {
         push(newStart);
       }
@@ -76,40 +77,35 @@ public class TraversalIterator implements Iterator<Integer> {
     for (int n : neighbors) {
       if (this.unvisited.contains(n)) {
         if (isBFS) {
-          add(n);
+          offer(n);
         } else {
           push(n);
         }
         this.unvisited.remove(n);
       }
     }
-    count++;
     return current;
   }
 
   @Override
   public boolean hasNext() {
-    return this.count < this.graph.getNumOfVertices();
+    return !(this.queue.isEmpty() && this.unvisited.isEmpty());
   }
 
-  private void push(int i) {
-    Stack<Integer> stack = (Stack<Integer>) this.queue;
-    stack.push(i);
+  private void push(int id) {
+    ((Stack<Integer>) this.queue).push(id);
   }
 
   private int pop() {
-    Stack<Integer> stack = (Stack<Integer>) this.queue;
-    return stack.pop();
+    return ((Stack<Integer>) this.queue).pop();
   }
 
-  private void add(int i) {
-    Queue<Integer> queue = (Queue<Integer>) this.queue;
-    queue.add(i);
+  private void offer(int id) {
+    this.queue.add(id);
   }
 
   private int poll() {
-    Queue<Integer> queue = (Queue<Integer>) this.queue;
-    return queue.poll();
+    return ((Queue<Integer>) this.queue).poll();
   }
 
 }
