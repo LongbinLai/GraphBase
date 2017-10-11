@@ -6,9 +6,7 @@ public class DirectedGraph extends Graph {
   public Vertex removeVertex(int id) {
     Vertex v = super.removeVertex(id);
     if (v != null) {
-      for (Vertex n : this.getVertices()) {
-        n.removeNeighbor(id);
-      }
+      this.getVertices().forEach(n -> n.removeNeighbor(id));
     }
     return v;
   }
@@ -28,11 +26,11 @@ public class DirectedGraph extends Graph {
     return begin.removeNeighbor(e.getEnd());
   }
 
-  public UndirectedGraph toUndirected() {
-    UndirectedGraph g = new UndirectedGraph();
-    for (Edge e : this.getEdges()) {
-      g.addEdge(e);
-    }
+  @Override
+  public Object clone() {
+    DirectedGraph g = new DirectedGraph();
+    this.getVertices().forEach(v -> g.addVertex((Vertex) v.clone()));
     return g;
   }
+
 }
