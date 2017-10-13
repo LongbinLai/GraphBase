@@ -1,11 +1,14 @@
 package test.graph;
 
+import graph.DirectedGraph;
 import graph.UndirectedGraph;
 import graph.Edge;
 import graph.Vertex;
 import java.util.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import util.GraphReader;
 
 /**
  * UndirectedGraph Tester.
@@ -15,6 +18,13 @@ import org.junit.Test;
  * @since <pre>Sep 26, 2017</pre>
  */
 public class UndirectedGraphTest {
+
+  String testGraph;
+
+  @Before
+  public void before() throws Exception {
+    testGraph = this.getClass().getClassLoader().getResource("test1").getPath();
+  }
 
   @Test
   public void testAddGetRemoveNode() throws Exception {
@@ -59,5 +69,22 @@ public class UndirectedGraphTest {
     Assert.assertEquals(0, g.getEdges().size());
 
     Assert.assertNull(g.removeEdge(0, 1));
+  }
+
+  @Test
+  public void testEquals() throws Exception {
+    DirectedGraph g1 = new GraphReader(",").readDirectedGraph(testGraph);
+    DirectedGraph g2 = new GraphReader(",").readDirectedGraph(testGraph);
+
+    String testGraph2 = this.getClass().getClassLoader().getResource("test2").getPath();
+    DirectedGraph g3 = new GraphReader(",").readDirectedGraph(testGraph2);
+    Assert.assertEquals(g1, g2);
+    Assert.assertNotEquals(g2, g3);
+  }
+
+  @Test
+  public void testClone() throws Exception {
+    DirectedGraph g = new GraphReader(",").readDirectedGraph(testGraph);
+    Assert.assertEquals(g, g.clone());
   }
 } 
