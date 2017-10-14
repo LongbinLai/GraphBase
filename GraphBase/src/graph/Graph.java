@@ -1,11 +1,12 @@
 package graph;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Set;
 
-public abstract class Graph {
+public abstract class Graph implements Iterable{
 
   protected HashMap<Integer, Vertex> vertices;
 
@@ -78,20 +79,26 @@ public abstract class Graph {
     return vertices.keySet();
   }
 
-  public BfsIterator bfsIterator() {
-    return new BfsIterator(this);
+  public TraversalIterator bfsIterator() {
+    int startId = (int)keySet().iterator().next();
+    return new TraversalIterator(this,0,startId);
   }
 
-  public BfsIterator bfsIterator(int id) {
-    return new BfsIterator(this,id);
+  public TraversalIterator bfsIterator(int id) {
+    return new TraversalIterator(this,0,id);
   }
 
-  public DfsIterator dfsIterator() {
-    return new DfsIterator(this);
+  public TraversalIterator dfsIterator() {
+    int startId = (int)keySet().iterator().next();
+    return new TraversalIterator(this,1,startId);
   }
 
-  public DfsIterator dfsIterator(int id) {
-    return new DfsIterator(this,id);
+  public TraversalIterator dfsIterator(int id) {
+    return new TraversalIterator(this,1,id);
+  }
+
+  public TraversalIterator iterator() {
+    return bfsIterator();
   }
 
   @Override
